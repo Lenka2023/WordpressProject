@@ -35,9 +35,8 @@
 .woocommerce .cart-empty ~ .woocommerce-notices-wrapper {
   position: absolute;
   left: 50%;
-  -webkit-transform: translateX(-42%);
-      -ms-transform: translateX(-42%);
-          transform: translateX(-42%);
+  -ms-transform: translateX(-42%);
+      transform: translateX(-42%);
 }
 .woocommerce .cart-empty ~ .woocommerce-notices-wrapper .woocommerce-message {
   padding: 0 10px;

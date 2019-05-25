@@ -473,7 +473,8 @@ class Fusion_Scripts {
 			$map_protocol = ( is_ssl() ) ? 'https' : 'http';
 			$map_key      = apply_filters( 'fusion_google_maps_api_key', fusion_library()->get_option( 'gmap_api' ) );
 			$map_key      = ( $map_key ) ? 'key=' . $map_key . '&' : '';
-			$map_api      = $map_protocol . '://maps.googleapis.com/maps/api/js?' . $map_key . 'language=' . substr( get_locale(), 0, 2 );
+			$lang_code    = fusion_get_google_maps_language_code();
+			$map_api      = $map_protocol . '://maps.googleapis.com/maps/api/js?' . $map_key . 'language=' . $lang_code;
 			wp_register_script( 'google-maps-api', $map_api, array(), '1', true );
 			wp_register_script( 'google-maps-infobox', self::$js_folder_url . '/library/infobox_packed.js', array(), '1', true );
 		}

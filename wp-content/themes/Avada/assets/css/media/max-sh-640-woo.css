@@ -5,9 +5,8 @@ body .wooslider .overlay-full.layout-text-left .slide-excerpt {
   padding: 20px !important;
 }
 .products-slider .es-nav span {
-  -webkit-transform: scale(0.5) !important;
-      -ms-transform: scale(0.5) !important;
-          transform: scale(0.5) !important;
+  -ms-transform: scale(0.5) !important;
+      transform: scale(0.5) !important;
 }
 .shop_table .filler-td {
   display: none;

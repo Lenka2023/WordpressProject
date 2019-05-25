@@ -277,10 +277,10 @@ class Avada_Template {
 		if ( ! Avada()->settings->get( 'mobile_slidingbar_widgets' ) ) {
 			$classes[] = 'no-mobile-slidingbar';
 		}
-		if ( ! Avada()->settings->get( 'status_totop' ) ) {
-			$classes[] = 'no-totop';
+		if ( 'mobile' === Avada()->settings->get( 'status_totop' ) ) {
+			$classes[] = 'no-desktop-totop';
 		}
-		if ( ! Avada()->settings->get( 'status_totop_mobile' ) ) {
+		if ( false === strpos( Avada()->settings->get( 'status_totop' ), 'mobile' ) ) {
 			$classes[] = 'no-mobile-totop';
 		}
 		if ( ! Avada()->settings->get( 'status_outline' ) ) {
@@ -291,6 +291,8 @@ class Avada_Template {
 		) {
 			$classes[] = 'woo-tabs-horizontal';
 		}
+
+		$classes[] = 'fusion-sub-menu-' . Avada()->settings->get( 'main_menu_sub_menu_animation' );
 
 		if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) ) {
 			$classes[] = 'mobile-logo-pos-' . strtolower( Avada()->settings->get( 'logo_alignment' ) );
@@ -425,6 +427,10 @@ class Avada_Template {
 			}
 		}
 
+		if ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ubermenu_get_menu_instance_by_theme_location( 'main_navigation' ) ) {
+			$classes[] = 'fusion-ubermenu-support';
+		}
+
 		$classes[] = 'mobile-menu-design-' . Avada()->settings->get( 'mobile_menu_design' );
 
 		$classes[] = 'fusion-image-hovers';
@@ -539,9 +545,10 @@ class Avada_Template {
 			}
 		}
 
-		$classes    = '';
-		$styles     = '';
-		$sep_styles = '';
+		$classes        = '';
+		$styles         = '';
+		$heading_styles = '';
+		$sep_styles     = '';
 
 		$classes_array = explode( ' ', $style_type );
 		foreach ( $classes_array as $class ) {
@@ -555,6 +562,10 @@ class Avada_Template {
 			$styles .= sprintf( 'margin-bottom:%s;', Fusion_Sanitize::get_value_with_unit( $margin_bottom ) );
 		}
 
+		if ( '' !== $margin_top || '' !== $margin_bottom ) {
+			$heading_styles .= 'margin:0;';
+		}
+
 		if ( false !== strpos( $style_type, 'underline' ) || false !== strpos( $style_type, 'none' ) ) {
 
 			if ( false !== strpos( $style_type, 'underline' ) && $sep_color ) {
@@ -564,7 +575,7 @@ class Avada_Template {
 			}
 			?>
 			<div class="fusion-title fusion-title-size-<?php echo esc_attr( $size_array[ $size ] ); ?><?php echo esc_attr( $classes ); ?>" style="<?php echo esc_attr( $styles ); ?>">
-				<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>">
+				<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>" style="<?php echo esc_attr( $heading_styles ); ?>">
 					<?php echo $content; // WPCS: XSS ok. ?>
 				</h<?php echo (int) $size; ?>>
 			</div>
@@ -576,7 +587,7 @@ class Avada_Template {
 					<div class="title-sep-container">
 						<div class="title-sep<?php echo esc_attr( $classes ); ?>"></div>
 					</div>
-					<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>">
+					<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>" style="<?php echo esc_attr( $heading_styles ); ?>">
 						<?php echo $content; // WPCS: XSS ok. ?>
 					</h<?php echo (int) $size; ?>>
 				</div>
@@ -587,7 +598,7 @@ class Avada_Template {
 					<div class="title-sep-container title-sep-container-left">
 						<div class="title-sep<?php echo esc_attr( $classes ); ?>"></div>
 					</div>
-					<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>">
+					<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>" style="<?php echo esc_attr( $heading_styles ); ?>">
 						<?php echo $content; // WPCS: XSS ok. ?>
 					</h<?php echo (int) $size; ?>>
 					<div class="title-sep-container title-sep-container-right">
@@ -598,7 +609,7 @@ class Avada_Template {
 			} else {
 				?>
 				<div class="fusion-title fusion-title-size-<?php echo esc_attr( $size_array[ $size ] ); ?><?php echo esc_attr( $classes ); ?>" style="<?php echo esc_attr( $styles ); ?>">
-					<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>">
+					<h<?php echo (int) $size; ?> class="title-heading-<?php echo esc_attr( $content_align ); ?>" style="<?php echo esc_attr( $heading_styles ); ?>">
 						<?php echo $content; // WPCS: XSS ok. ?>
 					</h<?php echo (int) $size; ?>>
 					<div class="title-sep-container">

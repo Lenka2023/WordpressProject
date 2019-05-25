@@ -1,5 +1,6 @@
 /*
-Theme Name: Avada Child | Shared by VestaThemes.com
+Theme Name: Avada Child
+ | Shared by VestaThemes.com
 Description: Child theme for Avada theme
 Author: ThemeFusion
 Author URI: https://theme-fusion.com
@@ -7,3 +8,5 @@ Template: Avada
 Version: 1.0.0
 Text Domain:  Avada
 */
+
+.post-content p {margin-bottom: 0!important;}

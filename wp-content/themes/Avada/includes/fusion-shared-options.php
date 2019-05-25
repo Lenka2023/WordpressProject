@@ -75,6 +75,7 @@ function avada_set_builder_classes( $default_elements, $class ) {
 		$elements[] = '#tribe-events .tribe-events-tickets .add-to-cart .tribe-button';
 		$elements[] = '.page-tribe-attendee-registration button';
 		$elements[] = '#tribe-events .tribe-events-list .tribe-events-event-cost form .tribe-button';
+		$elements[] = '#tribe_events_filters_wrapper .tribe-events-filters-mobile-controls button';
 	}
 	$element_map['.fusion-button-default'] = $elements;
 
@@ -561,6 +562,7 @@ function avada_add_fb_styling( $css ) {
 			'.pagination a.inactive',
 			'.fusion-hide-pagination-text .pagination-prev',
 			'.fusion-hide-pagination-text .pagination-next',
+			'.fusion-pagination .page-numbers',
 			'.page-links a',
 			'.fusion-author .fusion-author-social',
 			'.side-nav li a',

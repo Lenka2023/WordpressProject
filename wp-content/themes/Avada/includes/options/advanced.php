@@ -182,15 +182,14 @@ function avada_options_section_advanced( $sections ) {
 						'label'       => esc_html__( 'ToTop Script', 'Avada' ),
 						'description' => esc_html__( 'Turn on to enable the ToTop script which adds the scrolling to top functionality.', 'Avada' ),
 						'id'          => 'status_totop',
-						'default'     => '1',
-						'type'        => 'switch',
-					),
-					'status_totop_mobile'             => array(
-						'label'       => esc_html__( 'ToTop Script on mobile', 'Avada' ),
-						'description' => esc_html__( 'Turn on to enable the ToTop script on mobile devices.', 'Avada' ),
-						'id'          => 'status_totop_mobile',
-						'default'     => '0',
-						'type'        => 'switch',
+						'default'     => 'desktop',
+						'type'        => 'radio-buttonset',
+						'choices'     => array(
+							'desktop_and_mobile'  => esc_html__( 'Desktop & Mobile', 'Avada' ),
+							'desktop' => esc_html__( 'Desktop', 'Avada' ),
+							'mobile'  => esc_html__( 'Mobile', 'Avada' ),
+							'off'     => esc_html__( 'Off', 'Avada' ),
+						),
 					),
 					'status_fusion_slider'            => array(
 						'label'       => esc_html__( 'Fusion Slider', 'Avada' ),

@@ -1,7 +1,6 @@
 #tribe-bar-form.tribe-bar-collapse {
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 #tribe-bar-form.tribe-bar-collapse:before,
 #tribe-bar-form.tribe-bar-collapse:after,
@@ -188,9 +187,8 @@ table.tribe-events-tickets tr td.add-to-cart {
   border-bottom: none;
 }
 .tribe-block__tickets__registration__event .tribe-block__tickets__registration__tickets__item {
-  -webkit-justify-content: normal;
-      -ms-flex-pack: normal;
-          justify-content: normal;
+  -ms-flex-pack: normal;
+      justify-content: normal;
 }
 .fusion-body .tribe-events-tickets-rsvp .quantity input {
   padding: 0;

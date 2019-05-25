@@ -44,7 +44,7 @@ function avada_options_section_contact( $sections ) {
 				'fields'      => array(
 					'contact_form_important_note_info' => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The options on this tab are only for the contact form that displays on the "Contact" page template except for the Google Map API Key.', 'Avada' ) . '</div>',
+						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The options on this tab are only for the contact form that displays on the "Contact" page template.', 'Avada' ) . '</div>',
 						'id'          => 'contact_form_important_note_info',
 						'type'        => 'custom',
 					),
@@ -107,7 +107,7 @@ function avada_options_section_contact( $sections ) {
 						'label'           => esc_html__( 'ReCaptcha Version', 'Avada' ),
 						'description'     => esc_html__( 'Set the ReCaptcha version you want to use and make sure your keys below match the set version.', 'Avada' ),
 						'id'              => 'recaptcha_version',
-						'default'         => 'v2',
+						'default'         => 'v3',
 						'type'            => 'radio-buttonset',
 						'choices'         => array(
 							'v2' => esc_html__( 'V2', 'Avada' ),
@@ -260,7 +260,7 @@ function avada_options_section_contact( $sections ) {
 					),
 					'gmap_embed_address'             => array(
 						'label'           => esc_html__( 'Address', 'Avada' ),
-						'description'     => esc_attr__( 'Add the address of the location you wish to display. Address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates. ex: 12.381068,-1.492711.', 'Avada' ),
+						'description'     => esc_attr__( 'Add the address of the location you wish to display. Leave empty, if you don\'t want to display a map on the contact page. Address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates. ex: 12.381068,-1.492711.', 'Avada' ),
 						'id'              => 'gmap_embed_address',
 						'default'         => '',
 						'type'            => 'text',
@@ -294,7 +294,7 @@ function avada_options_section_contact( $sections ) {
 					),
 					'gmap_address'                   => array(
 						'label'           => esc_html__( 'Google Map Address', 'Avada' ),
-						'description'     => esc_html__( 'Add the address to the location you wish to display. Single address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates with latlng=. ex: latlng=12.381068,-1.492711. For multiple addresses, separate addresses by using the | symbol. ex: Address 1|Address 2|Address 3.', 'Avada' ),
+						'description'     => esc_html__( 'Add the address to the location you wish to display. Leave empty, if you don\'t want to display a map on the contact page. Single address example: 775 New York Ave, Brooklyn, Kings, New York 11203. If the location is off, please try to use long/lat coordinates with latlng=. ex: latlng=12.381068,-1.492711. For multiple addresses, separate addresses by using the | symbol. ex: Address 1|Address 2|Address 3.', 'Avada' ),
 						'id'              => 'gmap_address',
 						'default'         => '775 New York Ave, Brooklyn, Kings, New York 11203',
 						'type'            => 'textarea',
@@ -576,7 +576,7 @@ function avada_options_section_contact( $sections ) {
 						'label'           => esc_html__( 'Map Overlay Color', 'Avada' ),
 						'description'     => esc_html__( 'Custom styling setting only. Pick any overlaying color for the map besides pure black or white. Works best with "roadmap" type.', 'Avada' ),
 						'id'              => 'map_overlay_color',
-						'default'         => ( isset( $settings['primary_color'] ) ) ? $settings['primary_color'] : '#a0ce4e',
+						'default'         => '#a0ce4e',
 						'type'            => 'color-alpha',
 						'active_callback' => array( 'Avada_Options_Conditionals', 'is_contact' ),
 						'required'        => array(

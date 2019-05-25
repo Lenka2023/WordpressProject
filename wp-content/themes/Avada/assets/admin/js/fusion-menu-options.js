@@ -157,7 +157,9 @@ jQuery( window ).load( function() {
 			$holder      = jQuery( this ).parents( '.menu-item-settings' ),
 			$modal       = jQuery( this ).parent().find( '.fusion-builder-modal-settings-container' ),
 			$colorPicker = jQuery( this ).parent().find( '.fusion-builder-color-picker-hex' ),
-			$clone;
+			$clone,
+			$rangeSlider,
+			$i;
 
 		event.preventDefault();
 		if ( 'undefined' !== typeof $id ) {
@@ -190,11 +192,14 @@ jQuery( window ).load( function() {
 			dropdownCssClass: 'avada-select2',
 			width: '100%'
 		} );
+
 		if ( $colorPicker.length ) {
 			$colorPicker.each( function() {
-				jQuery( this ).wpColorPicker( {
-					palettes: [ '#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B' ]
-				} );
+				if ( ! jQuery( this ).closest( '.wp-picker-container' ).length ) {
+					jQuery( this ).wpColorPicker( {
+						palettes: [ '#000000', '#ffffff', '#f44336', '#E91E63', '#03A9F4', '#00BCD4', '#8BC34A', '#FFEB3B', '#FFC107', '#FF9800', '#607D8B' ]
+					} );
+				}
 			} );
 		}
 
@@ -232,7 +237,7 @@ jQuery( window ).load( function() {
 					$hiddenValue  = ( $rangeDefault ) ? jQuery( this ).parent().find( '.fusion-hidden-value' ) : false,
 					$defaultValue = ( $rangeDefault ) ? jQuery( this ).parents( '.fusion-builder-option' ).find( '.fusion-range-default' ).data( 'default' ) : false;
 
-				createSlider( $i, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction );
+				createSlider( $i, $targetId, $rangeSlider, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction );
 
 				$i++;
 			} );
@@ -243,7 +248,8 @@ jQuery( window ).load( function() {
 
 	// On cancel.
 	$wrapEl.on( 'click', '.fusion-builder-modal-close', function( event ) {
-		var $backup = jQuery( '.fusion-menu-clone' ).find( '.fusion-builder-modal-settings-container' ).hide();
+		var $backup = jQuery( '.fusion-menu-clone' ).find( '.fusion-builder-modal-settings-container' ).hide(),
+			colorPickers = jQuery( this ).closest( '.fusion-builder-modal-settings-container' ).find( '.fusion-builder-option .wp-color-picker' );
 
 		event.preventDefault();
 
@@ -251,7 +257,14 @@ jQuery( window ).load( function() {
 			jQuery( this ).closest( '.widget' ).css( 'z-index', '100' );
 		}
 
-		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
+		if ( colorPickers.length ) {
+			colorPickers.each( function() {
+				if ( jQuery( this ).closest( '.wp-picker-container' ).hasClass( 'wp-picker-active' ) ) {
+					jQuery( this ).wpColorPicker( 'close' );
+				}
+			} );
+		}
+
 		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
 		jQuery( this ).parents( '.fusion-builder-modal-settings-container' ).replaceWith( $backup );
@@ -264,7 +277,10 @@ jQuery( window ).load( function() {
 
 	// On outside click.
 	$wrapEl.on( 'click', itemWrapEl + ' .fusion_builder_modal_overlay', function( event ) {
-		var $backup = jQuery( '.fusion-menu-clone' ).find( '.fusion-builder-modal-settings-container' ).hide();
+		var $backup = jQuery( '.fusion-menu-clone' ).find( '.fusion-builder-modal-settings-container' ).hide(),
+			settingsContainer = jQuery( this ).next( '.fusion-builder-modal-settings-container' ),
+			colorPickers = settingsContainer.find( '.fusion-builder-option .wp-color-picker' ),
+			rangeSlider = settingsContainer.find( '.fusion-builder-option.avada-range .fusion-slider-container' );
 
 		event.preventDefault();
 
@@ -272,12 +288,20 @@ jQuery( window ).load( function() {
 			jQuery( this ).closest( '.widget' ).css( 'z-index', '100' );
 		}
 
-		if ( 'undefined' !== typeof $rangeSlider && 0 < $rangeSlider.length ) {
-			$rangeSlider.each( function() {
+		if ( 'undefined' !== typeof rangeSlider && 0 < rangeSlider.length ) {
+			rangeSlider.each( function() {
 				this.noUiSlider.destroy();
 			} );
 		}
-		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
+
+		if ( colorPickers.length ) {
+			colorPickers.each( function() {
+				if ( jQuery( this ).closest( '.wp-picker-container' ).hasClass( 'wp-picker-active' ) ) {
+					jQuery( this ).wpColorPicker( 'close' );
+				}
+			} );
+		}
+
 		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
 		jQuery( this ).next().replaceWith( $backup );
@@ -289,28 +313,40 @@ jQuery( window ).load( function() {
 
 	// On save,
 	$wrapEl.on( 'click', '.fusion-builder-modal-save', function( event ) {
+		var settingsContainer = jQuery( this ).closest( '.fusion-builder-modal-settings-container' ),
+			colorPickers = jQuery( this ).closest( '.fusion-builder-modal-settings-container' ).find( '.fusion-builder-option .wp-color-picker' ),
+			rangeSlider = settingsContainer.find( '.fusion-builder-option.avada-range .fusion-slider-container' );
+
 		event.preventDefault();
 
 		if ( '.widget-inside' === itemWrapEl  && 'auto' !== jQuery( this ).closest( '.widget' ).css( 'z-index' ) ) {
 			jQuery( this ).closest( '.widget' ).css( 'z-index', '100' );
 		}
 
-		if ( 'undefined' !== typeof $rangeSlider && 0 < $rangeSlider.length ) {
-			$rangeSlider.each( function() {
+		if ( 'undefined' !== typeof rangeSlider && 0 < rangeSlider.length ) {
+			rangeSlider.each( function() {
 				this.noUiSlider.destroy();
 			} );
 		}
-		jQuery( '.fusion-builder-option .wp-color-picker' ).wpColorPicker( 'close' );
+
+		if ( colorPickers.length ) {
+			colorPickers.each( function() {
+				if ( jQuery( this ).closest( '.wp-picker-container' ).hasClass( 'wp-picker-active' ) ) {
+					jQuery( this ).wpColorPicker( 'close' );
+				}
+			} );
+		}
+
 		jQuery( '.fusion-builder-option select.select2-hidden-accessible' ).selectWoo( 'destroy' );
 		jQuery( '.fusion-active' ).removeClass( 'fusion-active' );
 		jQuery( this ).parents( '.fusion-builder-modal-settings-container' ).hide();
 		jQuery( '.fusion_builder_modal_overlay' ).hide();
 		jQuery( 'body' ).removeClass( 'fusion_builder_no_scroll' );
 		jQuery( '.fusion-menu-clone' ).html( '' );
+
 	} );
 
-
-	function createSlider( $slide, $targetId, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction ) {
+	function createSlider( $slide, $targetId, $rangeSlider, $rangeInput, $min, $max, $step, $value, $decimals, $rangeDefault, $hiddenValue, $defaultValue, $direction ) {
 
 		// Create slider with values passed on in data attributes.
 		var $slider = noUiSlider.create( $rangeSlider[ $slide ], {
@@ -376,6 +412,8 @@ jQuery( window ).load( function() {
 
 		// On manual input change, update slider position
 		$rangeInput.on( 'keyup', function( values, handle ) {
+			var $rangeSlider = jQuery( this ).next( '.fusion-slider-container' );
+
 			if ( $rangeDefault ) {
 				$rangeDefault.parent().removeClass( 'checked' );
 				$hiddenValue.val( values[handle] );
@@ -392,7 +430,6 @@ jQuery( window ).load( function() {
 		} );
 	}
 } );
-
 
 jQuery( document ).ready( function() {
 
@@ -418,5 +455,4 @@ jQuery( document ).ready( function() {
 			output += '</div>';
 			jQuery( 'body' ).append( output );
 		} () );
-
 } );

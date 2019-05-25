@@ -82,15 +82,12 @@
     margin-bottom: 50px;
   }
   #wrapper .orderby-order-container {
-    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: justify;
+        justify-content: space-between;
     margin: 0 auto 10px;
     width: 225px;
     float: none;
@@ -113,22 +110,26 @@
   #wrapper .catalog-ordering .order {
     margin: 0;
   }
-  #wrapper .product .images,
-  #wrapper .product .summary.entry-summary {
-    width: 48% !important;
-    float: left !important;
-    margin-left: 2% !important;
+  #wrapper .product .avada-single-product-gallery-wrapper {
+    float: left;
+    width: 48%;
   }
-  #wrapper .avada-single-product-gallery-wrapper .avada-product-gallery {
-    float: none !important;
+  #wrapper .product .images {
+    width: 100%;
+  }
+  #wrapper .product .summary.entry-summary {
+    float: left !important;
+    margin-left: 4% !important;
+    width: 48% !important;
   }
   #wrapper .woocommerce-tabs .tabs {
-    width: 24% !important;
+    width: 26% !important;
     float: left !important;
   }
   #wrapper .woocommerce-tabs .panel {
     float: right !important;
     width: 70% !important;
+    margin-left: 4%;
     padding: 4% !important;
   }
   .catalog-ordering .fusion-grid-list-view {

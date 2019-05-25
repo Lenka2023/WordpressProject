@@ -51,7 +51,14 @@ class Avada_Dynamic_CSS {
 	public function init() {
 
 		add_filter( 'fusion_dynamic_css_stylesheet_dependencies', array( $this, 'stylesheet_dependencies' ) );
-		add_filter( 'fusion_dynamic_css_final', array( $this, 'fusion_add_custom_css_to_dynamic' ), 999 );
+
+		// If CSS is cached in file or async media queries are turned off load custom CSS in make_css(), otherwise use
+		// fusion_library_inline_dynamic_css filter.
+		if ( '0' === Avada()->settings->get( 'media_queries_async' ) || 'file' === Avada()->settings->get( 'css_cache_method' ) ) {
+			add_filter( 'fusion_dynamic_css_final', array( $this, 'fusion_add_custom_css_to_dynamic' ), 999 );
+		} else {
+			add_filter( 'fusion_library_inline_custom_css', array( $this, 'fusion_add_custom_css_to_dynamic' ) );
+		}
 
 		// Backwards-compatibility.
 		add_filter( 'fusion_dynamic_css', array( $this, 'avada_dynamic_css_filter' ) );

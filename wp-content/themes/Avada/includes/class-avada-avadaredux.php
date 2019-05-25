@@ -174,14 +174,14 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			return;
 		}
 
-		if ( ! empty( $_POST['data'] ) ) { // WPCS: CSRF ok.
+		if ( ! empty( $_POST['data'] ) && isset( $_POST['data']['values'] ) ) { // WPCS: CSRF ok.
 
 			$existing_colors = get_option( 'avada_custom_color_schemes', array() );
 
-			if ( 'import' !== $_POST['data']['type'] ) { // WPCS: CSRF ok.
+			if ( ! empty( $_POST['data']['type'] ) && 'import' !== $_POST['data']['type'] ) { // WPCS: CSRF ok.
 				$scheme        = array();
 				$scheme_colors = wp_unslash( $_POST['data']['values'] ); // WPCS: CSRF ok sanitization ok.
-				$scheme_name   = sanitize_text_field( wp_unslash( $_POST['data']['name'] ) ); // WPCS: CSRF ok.
+				$scheme_name   = isset( $_POST['data']['name'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['name'] ) ) : ''; // WPCS: CSRF ok.
 
 				if ( defined( 'FUSION_BUILDER_PLUGIN_DIR' ) ) {
 					$fb_options = get_option( 'fusion_options' );
@@ -198,7 +198,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 				);
 
 				// Check if scheme trying to be saved already exists, if so unset and merge.
-				if ( 'update' === $_POST['data']['type'] ) { // WPCS: CSRF ok.
+				if ( isset( $_POST['data']['type'] ) && 'update' === $_POST['data']['type'] ) { // WPCS: CSRF ok.
 					// Remove existing saved version and and merge in.
 					foreach ( $existing_colors as $key => $existing_color ) {
 						if ( $existing_color['name'] === $scheme_name ) {
@@ -262,7 +262,7 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			return;
 		}
 
-		if ( ! empty( $_POST['data'] ) && is_array( $_POST['data']['names'] ) ) { // WPCS: CSRF ok.
+		if ( ! empty( $_POST['data'] ) && isset( $_POST['data']['names'] ) && is_array( $_POST['data']['names'] ) ) { // WPCS: CSRF ok.
 
 			$existing_colors = get_option( 'avada_custom_color_schemes', array() );
 			$post_data_names = wp_unslash( $_POST['data']['names'] ); // WPCS: CSRF ok sanitization ok.
@@ -451,6 +451,10 @@ class Avada_AvadaRedux extends Fusion_FusionRedux {
 			'privacy_expiry',
 			'pagination_range',
 			'pagination_start_end_range',
+			'search_excerpt_length',
+			'search_grid_columns',
+			'live_search_min_char_count',
+			'live_search_results_per_page',
 		);
 		return array_unique( array_merge( $fields, $extra_fields ) );
 	}

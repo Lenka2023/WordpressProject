@@ -105,10 +105,10 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		/**
 		 * How large is the overall width of a column?
 		 *
-		 * @access  private
-		 * @var int
+		 * @access private
+		 * @var string
 		 */
-		private $menu_megamenu_maxwidth = 0;
+		private $menu_megamenu_maxwidth = '';
 
 		/**
 		 * Should a colum title be displayed?
@@ -186,26 +186,13 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		private $flyout_menu_bg_markup = '';
 
 		/**
-		 * Sets the overall width of the megamenu wrappers
+		 * Holds info if previous column was a 100% column.
+		 *
+		 * @since 5.9.1
+		 * @access private
+		 * @var bool
 		 */
-		private function set_megamenu_max_width() {
-
-			// Set overall width of megamenu.
-			$site_width         = (int) str_replace( 'px', '', Avada()->settings->get( 'site_width' ) );
-			$megamenu_max_width = (int) Avada()->settings->get( 'megamenu_max_width' );
-			$megmanu_width      = 0;
-
-			$megamenu_width = $megamenu_max_width;
-			// Site width in px.
-			if ( false !== strpos( Avada()->settings->get( 'site_width' ), 'px' ) && false === strpos( Avada()->settings->get( 'site_width' ), 'calc' ) ) {
-				$megamenu_width = $site_width;
-				if ( $site_width > $megamenu_max_width && 0 < $megamenu_max_width ) {
-					$megamenu_width = $megamenu_max_width;
-				}
-			}
-
-			$this->menu_megamenu_maxwidth = $megamenu_width;
-		}
+		private $previous_column_was_100_percent = false;
 
 		/**
 		 * Start level.
@@ -220,12 +207,8 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		public function start_lvl( &$output, $depth = 0, $args = array() ) {
 
 			if ( 0 === $depth && 'enabled' === $this->menu_megamenu_status ) {
-				// Set overall width of megamenu.
-				if ( ! $this->menu_megamenu_maxwidth ) {
-					$this->set_megamenu_max_width();
-				}
 				$output .= '{first_level}';
-				$output .= '<div class="fusion-megamenu-holder" {megamenu_final_width}><ul role="menu" class="fusion-megamenu {megamenu_border}">';
+				$output .= '<div class="fusion-megamenu-holder" {megamenu_final_width}><ul role="menu" class="fusion-megamenu{megamenu_border}{megamenu_interior_width}">';
 			} elseif ( 2 <= $depth && 'enabled' === $this->menu_megamenu_status ) {
 				$output .= '<ul role="menu" class="sub-menu deep-level">';
 			} else {
@@ -247,7 +230,6 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 		public function end_lvl( &$output, $depth = 0, $args = array() ) {
 
 			$header_layout = Avada()->settings->get( 'header_layout' );
-			$row_width     = '';
 
 			if ( 0 === $depth && 'enabled' === $this->menu_megamenu_status ) {
 
@@ -258,41 +240,83 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					$col_span = ' col-span-' . $this->total_num_of_columns * 2;
 				}
 
-				// Calc overall megamenu wrapper width in px.
-				$wrapper_width = max( $this->menu_megamenu_rowwidth_matrix ) * $this->menu_megamenu_maxwidth;
+				$total_column_width_per_row = array();
+				foreach ( $this->menu_megamenu_rowwidth_matrix as $row => $columns ) {
+					$total_column_width_per_row[ $row ] = array_sum( $columns );
+				}
+				$max_row_width = max( $total_column_width_per_row );
+
+				$megamenu_interior_width = '';
+
+				// Set overall width of megamenu.
+				$megamenu_width = Avada()->settings->get( 'megamenu_width' );
+				if ( 'viewport_width' === $megamenu_width ) {
+					if ( 'Top' !== Avada()->settings->get( 'header_position' ) ) {
+						$site_header_width = (int) Avada()->settings->get( 'side_header_width' );
+						$this->menu_megamenu_maxwidth = 'calc(100vw - ' . $site_header_width . 'px)';
+						$wrapper_width = 'calc(' . $max_row_width . ' * (100vw - ' . $site_header_width . 'px))';
+					} else {
+						$this->menu_megamenu_maxwidth = '100vw';
+						$wrapper_width = ( $max_row_width * 100 ) . 'vw';
+
+						if ( 'site_width' === Avada()->settings->get( 'megamenu_interior_content_width' ) && 'fullwidth' === $this->menu_megamenu_width ) {
+							$megamenu_interior_width = ' fusion-megamenu-sitewidth" style="margin: 0 auto;width: 100%;max-width: ' . str_replace( '%', 'vw', Avada()->settings->get( 'site_width' ) ) . '"';
+						}
+					}
+				} elseif ( 'site_width' === $megamenu_width ) {
+					$this->menu_megamenu_maxwidth = str_replace( '%', 'vw', Avada()->settings->get( 'site_width' ) );
+
+					if ( false === strpos( $this->menu_megamenu_maxwidth, 'calc' ) ) {
+						$wrapper_width  = ( $max_row_width * Fusion_Sanitize::number( $this->menu_megamenu_maxwidth ) ) . Fusion_Sanitize::get_unit( $this->menu_megamenu_maxwidth );
+					} else {
+						$wrapper_width  = 'calc(' . $max_row_width . ' * (' . str_replace( array( 'calc(', ')' ), array( '', '' ), $this->menu_megamenu_maxwidth ) . '))';
+					}
+				} else {
+					$this->menu_megamenu_maxwidth = (int) Avada()->settings->get( 'megamenu_max_width' ) . 'px';
+					$wrapper_width = ( $max_row_width * (int) $this->menu_megamenu_maxwidth ) . 'px';
+				}
+
 				if ( 'fullwidth' === $this->menu_megamenu_width ) {
 					$col_span = ' col-span-12 fusion-megamenu-fullwidth';
+
 					// Overall megamenu wrapper width in px is max width for fullwidth megamenu.
 					$wrapper_width = $this->menu_megamenu_maxwidth;
 				}
 
 				$background_image = '';
 				if ( ! empty( $this->menu_megamenu_background_image ) ) {
-					$background_image = 'background-image: url(' . $this->menu_megamenu_background_image . ');';
+					$background_image = ';background-image: url(' . $this->menu_megamenu_background_image . ');';
 				}
 
-				$output = str_replace( '{first_level}', '<div class="fusion-megamenu-wrapper {fusion_columns} columns-' . $this->total_num_of_columns . $col_span . '" data-maxwidth="' . $this->menu_megamenu_maxwidth . '"><div class="row">', $output );
-				$output = str_replace( '{megamenu_final_width}', 'style="width:' . $wrapper_width . 'px;' . $background_image . '" data-width="' . $wrapper_width . '"', $output );
+				$output = str_replace( '{first_level}', '<div class="fusion-megamenu-wrapper {fusion_columns} columns-' . $this->total_num_of_columns . $col_span . '"><div class="row">', $output );
+				$output = str_replace( '{megamenu_final_width}', 'style="width:' . $wrapper_width . $background_image . '" data-width="' . $wrapper_width . '"', $output );
+				$output = str_replace( '{megamenu_interior_width}', $megamenu_interior_width, $output );
 
-				$replacement = ( $this->total_num_of_columns > $this->max_num_of_columns ) ? 'fusion-megamenu-border' : '';
+				$replacement = ( $this->total_num_of_columns > $this->max_num_of_columns ) ? ' fusion-megamenu-border' : '';
 				$output      = str_replace( '{megamenu_border}', $replacement, $output );
 
 				foreach ( $this->submenu_matrix as $row => $columns ) {
+
 					$layout_columns = 12 / $columns;
-					$layout_columns = ( 5 == $columns ) ? 2 : $layout_columns; // WPCS: loose comparison ok.
-
-					if ( $columns < $this->max_num_of_columns ) {
-						$row_width = 'style="width:' . $columns / $this->max_num_of_columns * 100 . '% !important;"';
-					}
-
-					$output = str_replace( '{row_width_' . $row . '}', $row_width, $output );
+					$layout_columns = ( 5 === $columns ) ? 2 : $layout_columns;
 
 					$replacement  = 'fusion-megamenu-row-columns-' . $columns;
 					$replacement .= ( ( $row - 1 ) * $this->max_num_of_columns + $columns < $this->total_num_of_columns ) ? ' fusion-megamenu-border' : '';
 
 					$output = str_replace( '{row_number_' . $row . '}', $replacement, $output );
+
+					$replacement = ( count( $this->submenu_matrix ) === $row ) ? '' : 'fusion-megamenu-border';
+					$output = str_replace( '{force_row_border_' . $row . '}', $replacement, $output );
+
 					$output = str_replace( '{current_row_' . $row . '}', 'fusion-megamenu-columns-' . $columns . ' col-lg-' . $layout_columns . ' col-md-' . $layout_columns . ' col-sm-' . $layout_columns, $output );
 					$output = str_replace( '{fusion_columns}', 'fusion-columns-' . $columns . ' columns-per-row-' . $columns, $output );
+				}
+
+				foreach ( $this->menu_megamenu_rowwidth_matrix as $row => $columns ) {
+					foreach ( $columns as $column => $column_width ) {
+						$weighted_width = ( 100 / $max_row_width * $column_width ) . '%';
+						$output = str_replace( '{column_width_' . $row . '_' . $column . '}', $weighted_width, $output );
+					}
 				}
 			} else {
 				$output .= '</ul>';
@@ -421,14 +445,13 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 					$this->menu_megamenu_width  = isset( $avada_meta['width'] ) ? $avada_meta['width'] : '';
 					$allowed_columns            = isset( $avada_meta['columns'] ) ? $avada_meta['columns'] : '';
 					if ( 'auto' !== $allowed_columns ) {
-						$this->max_num_of_columns = $allowed_columns;
+						$this->max_num_of_columns = (int) $allowed_columns;
 					}
 					$this->num_of_columns                = 0;
 					$this->total_num_of_columns          = 0;
 					$this->num_of_rows                   = 1;
 					$this->menu_megamenu_rowwidth_matrix = array();
-
-					$this->menu_megamenu_rowwidth_matrix[ $this->num_of_rows ] = 0;
+					$this->menu_megamenu_rowwidth_matrix[ $this->num_of_rows ] = array();
 
 					$this->menu_megamenu_background_image = isset( $avada_meta['background_image'] ) ? $avada_meta['background_image'] : '';
 				} elseif ( 1 === $depth ) {
@@ -461,12 +484,12 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 			if ( 1 === $depth && 'enabled' === $this->menu_megamenu_status ) {
 
 				if ( isset( $avada_meta['columnwidth'] ) && $avada_meta['columnwidth'] ) {
-					$this->menu_megamenu_columnwidth = $avada_meta['columnwidth'];
+					$this->menu_megamenu_columnwidth = floatval( $avada_meta['columnwidth'] ) . '%';
 				} else {
 					$this->menu_megamenu_columnwidth = '16.6666%';
 					if ( 'fullwidth' === $this->menu_megamenu_width && $this->max_num_of_columns ) {
 						$this->menu_megamenu_columnwidth = 100 / $this->max_num_of_columns . '%';
-					} elseif ( '1' == $this->max_num_of_columns ) { // WPCS: loose comparison ok.
+					} elseif ( 1 === $this->max_num_of_columns ) {
 						$this->menu_megamenu_columnwidth = '100%';
 					}
 				}
@@ -475,16 +498,23 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$this->total_num_of_columns++;
 
 				// Check if we need to start a new row.
-				if ( $this->num_of_columns > $this->max_num_of_columns ) {
+				if ( $this->num_of_columns > $this->max_num_of_columns || $this->previous_column_was_100_percent ) {
 					$this->num_of_columns = 1;
 					$this->num_of_rows++;
+					$force_row_border = '';
 
-					// Start new row width calculation.
-					$this->menu_megamenu_rowwidth_matrix[ $this->num_of_rows ] = floatval( $this->menu_megamenu_columnwidth ) / 100;
+					if ( $this->previous_column_was_100_percent ) {
+						$this->previous_column_was_100_percent = false;
+						$force_row_border = ' {force_row_border_' . $this->num_of_rows . '}';
+					}
 
-					$output .= '</ul><ul role="menu" class="fusion-megamenu fusion-megamenu-row-' . $this->num_of_rows . ' {row_number_' . $this->num_of_rows . '}" {row_width_' . $this->num_of_rows . '}>';
-				} else {
-					$this->menu_megamenu_rowwidth_matrix[ $this->num_of_rows ] += floatval( $this->menu_megamenu_columnwidth ) / 100;
+					$output .= '</ul><ul role="menu" class="fusion-megamenu fusion-megamenu-row-' . $this->num_of_rows . ' {row_number_' . $this->num_of_rows . '}' . $force_row_border . '{megamenu_interior_width}">';
+				}
+
+				$this->menu_megamenu_rowwidth_matrix[ $this->num_of_rows ][ $this->num_of_columns ] = floatval( $this->menu_megamenu_columnwidth ) / 100;
+
+				if ( isset( $avada_meta['columnwidth'] ) && '100%' === $this->menu_megamenu_columnwidth && 'fullwidth' !== $this->menu_megamenu_width ) {
+					$this->previous_column_was_100_percent = true;
 				}
 
 				$this->submenu_matrix[ $this->num_of_rows ] = $this->num_of_columns;
@@ -592,6 +622,10 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 
 				$atts['class'][] = 'fusion-' . $menu_highlight_style . '-highlight';
 
+				if ( ! empty( $menu_highlight_label ) ) {
+					$atts['class'][] = 'fusion-has-highlight-label';
+				}
+
 				if ( 0 === $depth && $item->description ) {
 					$atts['class'][] = 'fusion-has-description';
 				}
@@ -638,7 +672,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				$item_output .= $args->before . '<a ' . $attributes . '>';
 
 				// For right side header add the caret icon at the beginning.
-				if ( $args->has_children && ( ( 'parent' === $menu_display_dropdown_indicator && 0 === $depth ) || 'parent_child' === $menu_display_dropdown_indicator ) && 'v6' !== $header_layout && 'Right' === $header_position && ! $this->menu_style ) {
+				if ( $args->has_children && ( ( 'parent' === $menu_display_dropdown_indicator && 0 === $depth ) || 'parent_child' === $menu_display_dropdown_indicator ) && 'v6' !== $header_layout && ( 'Right' === $header_position && ! $is_rtl || 'Left' === $header_position && $is_rtl ) && ! $this->menu_style ) {
 					$item_output .= ' <span class="fusion-caret"><i class="fusion-dropdown-indicator"></i></span>';
 				}
 
@@ -733,7 +767,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 				}
 
 				// For top header and left side header add the caret icon at the end.
-				if ( $args->has_children && ( ( 'parent' === $menu_display_dropdown_indicator && 0 === $depth ) || 'parent_child' === $menu_display_dropdown_indicator ) && 'v6' !== $header_layout && 'Right' !== $header_position && ! $this->menu_style ) {
+				if ( $args->has_children && ( ( 'parent' === $menu_display_dropdown_indicator && 0 === $depth ) || 'parent_child' === $menu_display_dropdown_indicator ) && 'v6' !== $header_layout && ( ( 'Right' !== $header_position && ! $is_rtl ) || ( 'Left' !== $header_position && $is_rtl ) ) && ! $this->menu_style ) {
 					$item_output .= ' <span class="fusion-caret"><i class="fusion-dropdown-indicator"></i></span>';
 				}
 
@@ -784,9 +818,7 @@ if ( ! class_exists( 'Avada_Nav_Walker' ) ) {
 						}
 
 						if ( 'fullwidth' !== $this->menu_megamenu_width ) {
-							$width        = $this->menu_megamenu_maxwidth * floatval( $this->menu_megamenu_columnwidth ) / 100;
-							$column_width = 'data-width="' . $width . '"';
-							$style       .= 'width:' . $width . 'px;max-width:' . $width . 'px;';
+							$style .= 'width:{column_width_' . $this->num_of_rows . '_' . $this->num_of_columns . '};';
 						}
 					} else {
 						$class_names .= ' fusion-dropdown-submenu';

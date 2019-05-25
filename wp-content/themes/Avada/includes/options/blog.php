@@ -39,7 +39,7 @@ function avada_options_section_blog( $sections ) {
 				'fields'      => array(
 					'general_blog_important_note_info'     => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The options on this tab only control the assigned blog page in settings > reading, blog archives or the blog single post page, not the blog element. The only options on this tab that work with the blog element are the Date Format options and Load More Post Button Color.', 'Avada' ) . '</div>',
+						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The options on this tab only control the assigned blog page in "Settings > Reading", blog archives or the blog single post page, not the blog element. The only options on this tab that work with the blog element are the Date Format options and Load More Post Button Color.', 'Avada' ) . '</div>',
 						'id'          => 'general_blog_important_note_info',
 						'type'        => 'custom',
 					),
@@ -58,7 +58,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'blog_show_page_title_bar'             => array(
 						'label'           => esc_html__( 'Blog Assigned Page Title Bar', 'Avada' ),
-						'description'     => esc_html__( 'Controls how the page title bar displays on the assigned blog page in "settings > reading".', 'Avada' ),
+						'description'     => esc_html__( 'Controls how the page title bar displays on the assigned blog page in "Settings > Reading".', 'Avada' ),
 						'id'              => 'blog_show_page_title_bar',
 						'default'         => 'bar_and_content',
 						'choices'         => array(
@@ -71,7 +71,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'blog_title'                           => array(
 						'label'           => esc_html__( 'Blog Page Title', 'Avada' ),
-						'description'     => esc_html__( 'Controls the title text that displays in the page title bar only if your front page displays your latest post in "settings > reading".', 'Avada' ),
+						'description'     => esc_html__( 'Controls the title text that displays in the page title bar only if your front page displays your latest post in "Settings > Reading".', 'Avada' ),
 						'id'              => 'blog_title',
 						'default'         => 'Blog',
 						'type'            => 'text',
@@ -86,7 +86,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'blog_subtitle'                        => array(
 						'label'           => esc_html__( 'Blog Page Subtitle', 'Avada' ),
-						'description'     => esc_html__( 'Controls the subtitle text that displays in the page title bar only if your front page displays your latest post in "settings > reading".', 'Avada' ),
+						'description'     => esc_html__( 'Controls the subtitle text that displays in the page title bar only if your front page displays your latest post in "Settings > Reading".', 'Avada' ),
 						'id'              => 'blog_subtitle',
 						'default'         => '',
 						'type'            => 'text',
@@ -135,7 +135,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'blog_pagination_type'                 => array(
 						'label'           => esc_html__( 'Pagination Type', 'Avada' ),
-						'description'     => esc_html__( 'Controls the pagination type for the assigned blog page in "settings > reading" or blog archive pages.', 'Avada' ),
+						'description'     => esc_html__( 'Controls the pagination type for the assigned blog page in "Settings > Reading" or blog archive pages.', 'Avada' ),
 						'id'              => 'blog_pagination_type',
 						'default'         => 'Pagination',
 						'type'            => 'radio-buttonset',
@@ -155,7 +155,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'blog_archive_grid_columns'            => array(
 						'label'       => esc_html__( 'Number of Columns', 'Avada' ),
-						'description' => __( 'Controls the amount of columns for grid and masonry layout when using it for the assigned blog page in "Settings > Reading" or blog archive pages or search results page. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'Avada' ),
+						'description' => __( 'Controls the number of columns for grid and masonry layout when using it for the assigned blog page in "Settings > Reading" or blog archive pages. <strong>IMPORTANT:</strong> Masonry layout does not work with 1 column.', 'Avada' ),
 						'id'          => 'blog_archive_grid_columns',
 						'default'     => 3,
 						'type'        => 'slider',
@@ -190,7 +190,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'blog_archive_grid_column_spacing'     => array(
 						'label'       => esc_html__( 'Column Spacing', 'Avada' ),
-						'description' => esc_html__( 'Controls the column spacing for blog posts for grid and masonry layout when using it for the assigned blog page in "Settings > Reading" or blog archive pages or search results page.', 'Avada' ),
+						'description' => esc_html__( 'Controls the column spacing for blog posts for grid and masonry layout when using it for the assigned blog page in "Settings > Reading" or blog archive pages.', 'Avada' ),
 						'id'          => 'blog_archive_grid_column_spacing',
 						'default'     => '40',
 						'type'        => 'slider',
@@ -345,7 +345,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'content_length'                       => array(
 						'label'       => esc_html__( 'Blog Content Display', 'Avada' ),
-						'description' => esc_html__( 'Controls if the blog content displays an excerpt or full content or is completely disabled for the assigned blog page in "settings > reading" or blog archive pages.', 'Avada' ),
+						'description' => esc_html__( 'Controls if the blog content displays an excerpt or full content or is completely disabled for the assigned blog page in "Settings > Reading" or blog archive pages.', 'Avada' ),
 						'id'          => 'content_length',
 						'default'     => 'Excerpt',
 						'type'        => 'radio-buttonset',
@@ -357,7 +357,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'excerpt_length_blog'                  => array(
 						'label'       => esc_html__( 'Excerpt Length', 'Avada' ),
-						'description' => esc_html__( 'Controls the number of words in the post excerpts for the assigned blog page in "settings > reading" or blog archive pages.', 'Avada' ),
+						'description' => esc_html__( 'Controls the number of words in the post excerpts for the assigned blog page in "Settings > Reading" or blog archive pages.', 'Avada' ),
 						'id'          => 'excerpt_length_blog',
 						'default'     => '10',
 						'type'        => 'slider',
@@ -376,7 +376,7 @@ function avada_options_section_blog( $sections ) {
 					),
 					'strip_html_excerpt'                   => array(
 						'label'       => esc_html__( 'Strip HTML from Excerpt', 'Avada' ),
-						'description' => esc_html__( 'Turn on to strip HTML content from the excerpt for the assigned blog page in "settings > reading" or blog archive pages.', 'Avada' ),
+						'description' => esc_html__( 'Turn on to strip HTML content from the excerpt for the assigned blog page in "Settings > Reading" or blog archive pages.', 'Avada' ),
 						'id'          => 'strip_html_excerpt',
 						'default'     => '1',
 						'type'        => 'switch',
@@ -470,17 +470,17 @@ function avada_options_section_blog( $sections ) {
 							),
 						),
 					),
-					'author_info'             => array(
-						'label'       => esc_html__( 'Author Info Box', 'Avada' ),
-						'description' => esc_html__( 'Turn on to display the author info box below posts.', 'Avada' ),
-						'id'          => 'author_info',
-						'default'     => '1',
-						'type'        => 'switch',
-					),
 					'social_sharing_box'      => array(
 						'label'       => esc_html__( 'Social Sharing Box', 'Avada' ),
 						'description' => esc_html__( 'Turn on to display the social sharing box.', 'Avada' ),
 						'id'          => 'social_sharing_box',
+						'default'     => '1',
+						'type'        => 'switch',
+					),
+					'author_info'             => array(
+						'label'       => esc_html__( 'Author Info Box', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display the author info box below posts.', 'Avada' ),
+						'id'          => 'author_info',
 						'default'     => '1',
 						'type'        => 'switch',
 					),
@@ -510,7 +510,7 @@ function avada_options_section_blog( $sections ) {
 				'fields'      => array(
 					'blog_meta_important_note_info' => array(
 						'label'       => '',
-						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The on/off meta options on this tab only control the assigned blog page in settings > reading, or the blog archives, not the blog element. The only options on this tab that work with the blog element are the Meta Data Font Size and Date Format options.', 'Avada' ) . '</div>',
+						'description' => '<div class="fusion-redux-important-notice">' . __( '<strong>IMPORTANT NOTE:</strong> The on/off meta options on this tab only control the assigned blog page in "Settings > Reading" or the blog archives, not the blog element. The only options on this tab that work with the blog element are the Meta Data Font Size and Date Format options.', 'Avada' ) . '</div>',
 						'id'          => 'blog_meta_important_note_info',
 						'type'        => 'custom',
 					),

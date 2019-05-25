@@ -141,13 +141,6 @@ function avada_options_section_sidebars( $sections ) {
 				'icon'   => true,
 				'type'   => 'sub-section',
 				'fields' => array(
-					'pages_global_sidebar' => array(
-						'label'       => esc_html__( 'Activate Global Sidebar For Pages', 'Avada' ),
-						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all pages. This option overrides the page options.', 'Avada' ),
-						'id'          => 'pages_global_sidebar',
-						'default'     => '0',
-						'type'        => 'switch',
-					),
 					'pages_sidebar'        => array(
 						'label'       => esc_html__( 'Global Page Sidebar 1', 'Avada' ),
 						'description' => esc_html__( 'Select sidebar 1 that will display on all pages.', 'Avada' ),
@@ -163,6 +156,13 @@ function avada_options_section_sidebars( $sections ) {
 						'default'     => 'None',
 						'type'        => 'select',
 						'choices'     => $sidebar_options,
+					),
+					'pages_global_sidebar' => array(
+						'label'       => esc_html__( 'Force Global Sidebars For Pages', 'Avada' ),
+						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all pages. This option overrides the page options.', 'Avada' ),
+						'id'          => 'pages_global_sidebar',
+						'default'     => '0',
+						'type'        => 'switch',
 					),
 					'default_sidebar_pos'  => array(
 						'label'       => esc_html__( 'Global Page Sidebar Position', 'Avada' ),
@@ -184,13 +184,6 @@ function avada_options_section_sidebars( $sections ) {
 				'icon'        => true,
 				'type'        => 'sub-section',
 				'fields'      => array(
-					'portfolio_global_sidebar'   => array(
-						'label'       => esc_html__( 'Activate Global Sidebar For Portfolio Posts', 'Avada' ),
-						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all portfolio posts. This option overrides the portfolio post options.', 'Avada' ),
-						'id'          => 'portfolio_global_sidebar',
-						'default'     => '0',
-						'type'        => 'switch',
-					),
 					'portfolio_sidebar'          => array(
 						'label'       => esc_html__( 'Global Portfolio Post Sidebar 1', 'Avada' ),
 						'description' => esc_html__( 'Select sidebar 1 that will display on all portfolio posts.', 'Avada' ),
@@ -206,6 +199,13 @@ function avada_options_section_sidebars( $sections ) {
 						'default'     => 'None',
 						'type'        => 'select',
 						'choices'     => $sidebar_options,
+					),
+					'portfolio_global_sidebar'   => array(
+						'label'       => esc_html__( 'Force Global Sidebars  For Portfolio Posts', 'Avada' ),
+						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all portfolio posts. This option overrides the portfolio post options.', 'Avada' ),
+						'id'          => 'portfolio_global_sidebar',
+						'default'     => '0',
+						'type'        => 'switch',
 					),
 					'portfolio_sidebar_position' => array(
 						'label'       => esc_html__( 'Global Portfolio Sidebar Position', 'Avada' ),
@@ -260,13 +260,6 @@ function avada_options_section_sidebars( $sections ) {
 				'icon'        => true,
 				'type'        => 'sub-section',
 				'fields'      => array(
-					'posts_global_sidebar'  => array(
-						'label'       => esc_html__( 'Activate Global Sidebar For Blog Posts', 'Avada' ),
-						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all blog posts. This option overrides the blog post options.', 'Avada' ),
-						'id'          => 'posts_global_sidebar',
-						'default'     => '0',
-						'type'        => 'switch',
-					),
 					'posts_sidebar'         => array(
 						'label'       => esc_html__( 'Global Blog Post Sidebar 1', 'Avada' ),
 						'description' => esc_html__( 'Select sidebar 1 that will display on all blog posts.', 'Avada' ),
@@ -282,6 +275,13 @@ function avada_options_section_sidebars( $sections ) {
 						'default'     => 'None',
 						'type'        => 'select',
 						'choices'     => $sidebar_options,
+					),
+					'posts_global_sidebar'  => array(
+						'label'       => esc_html__( 'Force Global Sidebars For Blog Posts', 'Avada' ),
+						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all blog posts. This option overrides the blog post options.', 'Avada' ),
+						'id'          => 'posts_global_sidebar',
+						'default'     => '0',
+						'type'        => 'switch',
 					),
 					'blog_sidebar_position' => array(
 						'label'       => esc_html__( 'Global Blog Sidebar Position', 'Avada' ),
@@ -371,14 +371,6 @@ function avada_options_section_sidebars( $sections ) {
 				'type'            => 'sub-section',
 				'active_callback' => array( 'Avada_Options_Conditionals', 'is_woo' ),
 				'fields'          => array(
-					'woo_global_sidebar'   => array(
-						'label'           => esc_html__( 'Activate Global Sidebar For WooCommerce Products', 'Avada' ),
-						'description'     => esc_html__( 'Turn on if you want to use the same sidebars on all WooCommerce products. This option overrides the WooCommerce post options.', 'Avada' ),
-						'id'              => 'woo_global_sidebar',
-						'default'         => '0',
-						'type'            => 'switch',
-						'active_callback' => array( 'Avada_Options_Conditionals', 'is_woo' ),
-					),
 					'woo_sidebar'          => array(
 						'label'           => esc_html__( 'Global WooCommerce Product Sidebar 1', 'Avada' ),
 						'description'     => esc_html__( 'Select sidebar 1 that will display on all WooCommerce products.', 'Avada' ),
@@ -395,6 +387,14 @@ function avada_options_section_sidebars( $sections ) {
 						'default'         => 'None',
 						'type'            => 'select',
 						'choices'         => $sidebar_options,
+						'active_callback' => array( 'Avada_Options_Conditionals', 'is_woo' ),
+					),
+					'woo_global_sidebar'   => array(
+						'label'           => esc_html__( 'Force Global Sidebars For WooCommerce Products', 'Avada' ),
+						'description'     => esc_html__( 'Turn on if you want to use the same sidebars on all WooCommerce products. This option overrides the WooCommerce post options.', 'Avada' ),
+						'id'              => 'woo_global_sidebar',
+						'default'         => '0',
+						'type'            => 'switch',
 						'active_callback' => array( 'Avada_Options_Conditionals', 'is_woo' ),
 					),
 					'woo_sidebar_position' => array(
@@ -451,13 +451,6 @@ function avada_options_section_sidebars( $sections ) {
 				'id'     => 'ec_global_sidebar_heading',
 				'type'   => 'sub-section',
 				'fields' => array(
-					'ec_global_sidebar' => array(
-						'label'       => esc_html__( 'Activate Global Sidebar For Events Calendar Posts', 'Avada' ),
-						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all Events Calendar posts. This option overrides the Events Calendar post options.', 'Avada' ),
-						'id'          => 'ec_global_sidebar',
-						'default'     => 0,
-						'type'        => 'switch',
-					),
 					'ec_sidebar'        => array(
 						'label'       => esc_html__( 'Global Events Calendar Sidebar 1', 'Avada' ),
 						'description' => esc_html__( 'Select sidebar 1 that will display on all Events Calendar posts and archives pages.', 'Avada' ),
@@ -473,6 +466,13 @@ function avada_options_section_sidebars( $sections ) {
 						'default'     => 'None',
 						'type'        => 'select',
 						'choices'     => $sidebar_options,
+					),
+					'ec_global_sidebar' => array(
+						'label'       => esc_html__( 'Force Global Sidebars For Events Calendar Posts', 'Avada' ),
+						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all Events Calendar posts. This option overrides the Events Calendar post options.', 'Avada' ),
+						'id'          => 'ec_global_sidebar',
+						'default'     => 0,
+						'type'        => 'switch',
 					),
 					'ec_sidebar_pos'    => array(
 						'label'       => esc_html__( 'Global Events Calendar Sidebar Position ', 'Avada' ),
@@ -494,13 +494,6 @@ function avada_options_section_sidebars( $sections ) {
 				'icon'        => true,
 				'type'        => 'sub-section',
 				'fields'      => array(
-					'bbpress_global_sidebar'   => array(
-						'label'       => esc_html__( 'Activate Global Sidebar For bbPress/BuddyPress', 'Avada' ),
-						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all bbPress/BuddyPress pages. Forums index page, profile page and search page does not need this option checked to display the sidebars selected below.', 'Avada' ),
-						'id'          => 'bbpress_global_sidebar',
-						'default'     => '0',
-						'type'        => 'switch',
-					),
 					'ppbress_sidebar'          => array(
 						'label'       => esc_html__( 'Global bbPress/BuddyPress Sidebar 1', 'Avada' ),
 						'description' => esc_html__( 'Select sidebar 1 that will display on all bbPress/BuddyPress pages.', 'Avada' ),
@@ -516,6 +509,13 @@ function avada_options_section_sidebars( $sections ) {
 						'default'     => 'None',
 						'type'        => 'select',
 						'choices'     => $sidebar_options,
+					),
+					'bbpress_global_sidebar'   => array(
+						'label'       => esc_html__( 'Force Global Sidebars For bbPress/BuddyPress', 'Avada' ),
+						'description' => esc_html__( 'Turn on if you want to use the same sidebars on all bbPress/BuddyPress pages. Forums index page, profile page and search page does not need this option checked to display the sidebars selected below.', 'Avada' ),
+						'id'          => 'bbpress_global_sidebar',
+						'default'     => '0',
+						'type'        => 'switch',
 					),
 					'bbpress_sidebar_position' => array(
 						'label'       => esc_html__( 'Global bbPress/BuddyPress Sidebar Position', 'Avada' ),

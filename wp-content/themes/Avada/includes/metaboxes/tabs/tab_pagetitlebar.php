@@ -81,14 +81,14 @@ $this->radio_buttonset(
 
 $this->radio_buttonset(
 	'page_title_text',
-	esc_html__( 'Page Title Bar Text', 'Avada' ),
+	esc_html__( 'Page Title Bar Headings', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
 		'yes'     => esc_attr__( 'Show', 'Avada' ),
 		'no'      => esc_attr__( 'Hide', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide the page title bar text. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_bar_text', '', 'showhide' ) ),
+	sprintf( esc_html__( 'Choose to show or hide the page title bar headings. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_bar_text', '', 'showhide' ) ),
 	'',
 	$page_title_dependency
 );
@@ -124,15 +124,15 @@ $this->radio_buttonset(
 
 $this->textarea(
 	'page_title_custom_text',
-	esc_attr__( 'Page Title Bar Custom Text', 'Avada' ),
-	esc_attr__( 'Insert custom text for the page title bar.', 'Avada' ),
+	esc_attr__( 'Page Title Bar Heading Custom Text', 'Avada' ),
+	esc_attr__( 'Insert custom text for the page title bar main heading.', 'Avada' ),
 	'',
 	$page_title_text_dependency
 );
 
 $this->text(
 	'page_title_text_size',
-	esc_attr__( 'Page Title Bar Text Size', 'Avada' ),
+	esc_attr__( 'Page Title Bar Heading Font Size', 'Avada' ),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'In pixels. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_font_size' ) ),
 	$page_title_text_dependency
@@ -140,43 +140,43 @@ $this->text(
 
 $this->text(
 	'page_title_line_height',
-	esc_attr__( 'Page Title Bar Line Height', 'Avada' ),
+	esc_attr__( 'Page Title Bar Heading Line Height', 'Avada' ),
 	/* translators: Additional description (defaults). */
 	sprintf( esc_html__( 'Valid CSS unit. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_line_height' ) ),
 	$page_title_text_dependency
 );
 
+$this->color(
+	'page_title_font_color',
+	esc_attr__( 'Page Title Bar Heading Font Color', 'Avada' ),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Controls the text color of the page title bar main heading. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_color' ) ),
+	true,
+	$page_title_text_dependency,
+	Avada()->settings->get( 'page_title_color' )
+);
+
 $this->textarea(
 	'page_title_custom_subheader',
-	esc_attr__( 'Page Title Bar Custom Subheader Text', 'Avada' ),
-	esc_html__( 'Insert custom subhead text for the page title bar.', 'Avada' ),
+	esc_attr__( 'Page Title Bar Subheading Custom Text', 'Avada' ),
+	esc_html__( 'Insert custom text for the page title bar subheading.', 'Avada' ),
 	'',
 	$page_title_text_dependency
 );
 
 $this->text(
 	'page_title_custom_subheader_text_size',
-	esc_html__( 'Page Title Bar Subhead Text Size', 'Avada' ),
+	esc_html__( 'Page Title Bar Subheading Font Size', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_attr__( 'In pixels, default is 10px. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_subheader_font_size' ) ),
+	sprintf( esc_attr__( 'In pixels. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_subheader_font_size' ) ),
 	$page_title_text_dependency
 );
 
 $this->color(
-	'page_title_font_color',
-	esc_attr__( 'Page Title Font Color', 'Avada' ),
-	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Controls the text color of the page title fonts. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_color' ) ),
-	true,
-	$page_title_text_dependency,
-	Avada()->settings->get( 'page_title_color' )
-);
-
-$this->color(
 	'page_title_subheader_font_color',
-	esc_attr__( 'Page Title Subheader Font Color', 'Avada' ),
+	esc_attr__( 'Page Title Bar Subheading Font Color', 'Avada' ),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Controls the text color of the page title subheader. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_subheader_color' ) ),
+	sprintf( esc_html__( 'Controls the text color of the page title bar subheading. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_subheader_color' ) ),
 	true,
 	$page_title_text_dependency,
 	Avada()->settings->get( 'page_title_subheader_color' )
@@ -184,14 +184,14 @@ $this->color(
 
 $this->radio_buttonset(
 	'page_title_100_width',
-	esc_html__( '100% Page Title Width', 'Avada' ),
+	esc_html__( 'Page Title Bar 100% Width', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
 		'yes'     => esc_attr__( 'Yes', 'Avada' ),
 		'no'      => esc_attr__( 'No', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to set the page title content to 100&#37; of the browser width. Select "No" for site width. Only works with wide layout mode. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_100_width', '', 'yesno' ) ),
+	sprintf( esc_html__( 'Choose "Yes" to have the page title bar area display at 100&#37; width according to the viewport size. Select "No" to follow site width. Only works with wide layout mode. %s', 'Avada' ), Avada()->settings->get_default_description( 'page_title_100_width', '', 'yesno' ) ),
 	'',
 	$page_title_dependency
 );

@@ -15,6 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $this->radio_buttonset(
+	'portfolio_width_100',
+	esc_html__( 'Use 100% Width Page', 'Avada' ),
+	array(
+		'default' => esc_attr__( 'Default', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
+		'no'      => esc_attr__( 'No', 'Avada' ),
+	),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Choose to set this post to 100&#37; browser width. %s', 'Avada' ), Avada()->settings->get_default_description( 'blog_width_100', '', 'yesno' ) )
+);
+
+$this->radio_buttonset(
 	'show_first_featured_image',
 	esc_attr__( 'Disable First Featured Image', 'Avada' ),
 	array(
@@ -41,23 +53,24 @@ $this->dimension(
 	)
 );
 
-$this->radio_buttonset(
-	'portfolio_width_100',
-	esc_html__( 'Use 100% Width Page', 'Avada' ),
-	array(
-		'default' => esc_attr__( 'Default', 'Avada' ),
-		'yes'     => esc_attr__( 'Yes', 'Avada' ),
-		'no'      => esc_attr__( 'No', 'Avada' ),
-	),
-	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to set this post to 100&#37; browser width. %s', 'Avada' ), Avada()->settings->get_default_description( 'blog_width_100', '', 'yesno' ) )
-);
-
 $this->textarea(
 	'video',
 	esc_attr__( 'Video Embed Code', 'Avada' ),
 	esc_html__( 'Insert Youtube or Vimeo embed code.', 'Avada' )
 );
+
+$this->radio_buttonset(
+	'post_pagination',
+	esc_html__( 'Show Previous/Next Pagination', 'Avada' ),
+	array(
+		'default' => esc_attr__( 'Default', 'Avada' ),
+		'yes'     => esc_attr__( 'Show', 'Avada' ),
+		'no'      => esc_attr__( 'Hide', 'Avada' ),
+	),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Choose to show or hide the post navigation. %s', 'Avada' ), Avada()->settings->get_default_description( 'blog_pn_nav', '', 'showhide' ) )
+);
+
 
 $screen = get_current_screen();
 if ( 'avada_faq' !== $screen->post_type ) {
@@ -94,15 +107,15 @@ if ( 'avada_faq' !== $screen->post_type ) {
 } // End if().
 
 $this->radio_buttonset(
-	'related_posts',
-	esc_attr__( 'Show Related Posts', 'Avada' ),
+	'post_meta',
+	esc_html__( 'Show Post Meta', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
 		'yes'     => esc_attr__( 'Show', 'Avada' ),
 		'no'      => esc_attr__( 'Hide', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide related posts on this post. %s', 'Avada' ), Avada()->settings->get_default_description( 'related_posts', '', 'showhide' ) )
+	sprintf( esc_html__( 'Choose to show or hide the post meta. %s', 'Avada' ), Avada()->settings->get_default_description( 'post_meta', '', 'showhide' ) )
 );
 
 $this->radio_buttonset(
@@ -118,18 +131,6 @@ $this->radio_buttonset(
 );
 
 $this->radio_buttonset(
-	'post_pagination',
-	esc_html__( 'Show Previous/Next Pagination', 'Avada' ),
-	array(
-		'default' => esc_attr__( 'Default', 'Avada' ),
-		'yes'     => esc_attr__( 'Show', 'Avada' ),
-		'no'      => esc_attr__( 'Hide', 'Avada' ),
-	),
-	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide the post navigation. %s', 'Avada' ), Avada()->settings->get_default_description( 'blog_pn_nav', '', 'showhide' ) )
-);
-
-$this->radio_buttonset(
 	'author_info',
 	esc_attr__( 'Show Author Info Box', 'Avada' ),
 	array(
@@ -142,15 +143,15 @@ $this->radio_buttonset(
 );
 
 $this->radio_buttonset(
-	'post_meta',
-	esc_html__( 'Show Post Meta', 'Avada' ),
+	'related_posts',
+	esc_attr__( 'Show Related Posts', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
 		'yes'     => esc_attr__( 'Show', 'Avada' ),
 		'no'      => esc_attr__( 'Hide', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide the post meta. %s', 'Avada' ), Avada()->settings->get_default_description( 'post_meta', '', 'showhide' ) )
+	sprintf( esc_html__( 'Choose to show or hide related posts on this post. %s', 'Avada' ), Avada()->settings->get_default_description( 'related_posts', '', 'showhide' ) )
 );
 
 $this->radio_buttonset(
@@ -164,5 +165,4 @@ $this->radio_buttonset(
 	/* translators: Additional description (defaults). */
 	sprintf( esc_attr__( 'Choose to show or hide comments area. %s', 'Avada' ), Avada()->settings->get_default_description( 'blog_comments', '', 'showhide' ) )
 );
-
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

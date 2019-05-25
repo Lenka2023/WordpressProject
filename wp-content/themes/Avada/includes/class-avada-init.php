@@ -31,6 +31,8 @@ class Avada_Init {
 		add_action( 'after_setup_theme', array( $this, 'add_theme_supports' ), 10 );
 		add_action( 'after_setup_theme', array( $this, 'register_nav_menus' ) );
 		add_action( 'after_setup_theme', array( $this, 'add_image_size' ) );
+		add_action( 'after_setup_theme', array( $this, 'init_fb_demos_importer' ), 20 );
+		add_action( 'wp_ajax_fusion_builder_load_demo', array( $this, 'init_fb_demos_importer' ), 20 );
 		add_filter( 'image_size_names_choose', array( $this, 'add_image_sizes_to_media_library_dialog' ) );
 
 		if ( class_exists( 'BuddyPress' ) && ! Avada_Helper::is_buddypress() ) {
@@ -75,6 +77,8 @@ class Avada_Init {
 
 		if ( ! is_admin() ) {
 			add_filter( 'pre_get_posts', array( $this, 'modify_search_filter' ) );
+			add_filter( 'pre_get_posts', array( $this, 'empty_search_filter' ) );
+			add_filter( 'posts_search', array( $this, 'limit_search_to_title_only' ), 500, 2 );
 		}
 
 		// Check if we've got a task to remove backup data.
@@ -83,6 +87,10 @@ class Avada_Init {
 		}
 
 		add_action( 'wp_footer', array( $this, 'add_wp_footer_scripts' ), 9999 );
+
+		// Live Search.
+		add_action( 'wp_ajax_live_search_retrieve_posts', array( $this, 'live_search_retrieve_posts' ) );
+		add_action( 'wp_ajax_nopriv_live_search_retrieve_posts', array( $this, 'live_search_retrieve_posts' ) );
 	}
 
 	/**
@@ -162,6 +170,37 @@ class Avada_Init {
 	}
 
 	/**
+	 * Conditionally init Fusion_Builder_Demos_Importer class.
+	 *
+	 * @since 5.8.2
+	 * @access  public
+	 */
+	public function init_fb_demos_importer() {
+		$post_type = false;
+
+		if ( ! Avada_Helper::is_post_admin_screen() || ! current_theme_supports( 'fusion-builder-demos' ) || ! Avada()->registration->is_registered() || ! defined( 'FUSION_BUILDER_PLUGIN_DIR' ) || ( fusion_doing_ajax() && ! isset( $_POST['page_name'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			return;
+		}
+
+		// Edit screen.
+		$post_id = isset( $_GET['post'] ) ? sanitize_text_field( wp_unslash( $_GET['post'] ) ) : '';
+
+		if ( '' !== $post_id ) {
+			$post_type = get_post_type( $post_id );
+		}
+
+		// New post screen.
+		if ( false === $post_type && isset( $_GET['post_type'] ) ) {
+			$post_type = sanitize_text_field( wp_unslash( $_GET['post_type'] ) );
+		}
+
+		// Fusion Builder is enabled for this post type.
+		if ( in_array( $post_type, FusionBuilder::allowed_post_types(), true ) || ( fusion_doing_ajax() && isset( $_POST['page_name'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+			$fusion_builder_demo_importer = new Fusion_Builder_Demos_Importer();
+		}
+	}
+
+	/**
 	 * Add theme_supports.
 	 *
 	 * @access  public
@@ -193,6 +232,11 @@ class Avada_Init {
 		add_theme_support( 'post-formats', array( 'gallery', 'link', 'image', 'quote', 'video', 'audio', 'chat' ) );
 		// Add post thumbnail functionality.
 		add_theme_support( 'post-thumbnails' );
+
+		// Add Fusion Builder Demos support.
+		add_theme_support( 'fusion-builder-demos' );
+
+		add_theme_support( 'wp-block-styles' );
 
 	}
 
@@ -485,6 +529,120 @@ class Avada_Init {
 		return $additional_argument;
 	}
 
+	/**
+	 * Performs the live search for posts.
+	 *
+	 * @since 5.9
+	 * @access public
+	 * @return void.
+	 */
+	public function live_search_retrieve_posts() {
+		$args = apply_filters(
+			'fusion_live_search_query_args',
+			array(
+				's'                   => trim( esc_attr( strip_tags( $_POST['search'] ) ) ), // phpcs:ignore WordPress.Security.ValidatedSanitizedInput, WordPress.Security.NonceVerification
+				'post_type'           => $this->get_search_results_post_types(),
+				'posts_per_page'      => (int) Avada()->settings->get( 'live_search_results_per_page' ),
+				'post_status'         => 'publish',
+				'ignore_sticky_posts' => 1,
+			)
+		);
+
+		if ( Avada()->settings->get( 'search_limit_to_post_titles' ) ) {
+			add_filter( 'posts_where', array( $this, 'limit_wp_query_to_title_only' ), 10, 2 );
+			$search_results = fusion_cached_query( $args );
+			remove_filter( 'posts_where', array( $this, 'limit_wp_query_to_title_only' ) );
+		} else {
+			$search_results = fusion_cached_query( $args );
+		}
+
+		if ( $search_results->have_posts() ) {
+			$display_post_type = Avada()->settings->get( 'live_search_display_post_type' );
+			$display_featured_image = Avada()->settings->get( 'live_search_display_featured_image' );
+
+			while ( $search_results->have_posts() ) {
+				$search_results->the_post();
+				global $post;
+
+				$post_type = '';
+				if ( $display_post_type ) {
+					$post_type_obj = get_post_type_object( get_post_type( $post->ID ) );
+					$post_type = ( $post_type_obj ) ? $post_type_obj->labels->singular_name : $post_type;
+				}
+
+				$result_suggestions[] = array(
+					'id'        => esc_attr( $post->ID ),
+					'type'      => $post_type,
+					'title'     => get_the_title( $post->ID ),
+					'post_url'  => get_the_permalink( $post->ID ),
+					'image_url' => $display_featured_image ? get_the_post_thumbnail_url( $post->ID, 'recent-works-thumbnail' ) : '',
+				);
+			}
+		}
+
+		wp_reset_postdata();
+
+		wp_send_json( $result_suggestions );
+	}
+
+	/**
+	 * Modifies the WP_Query SQL query to limit to post titles.
+	 *
+	 * @since 5.9
+	 * @access public
+	 * @param string $where    Search SQL for WHERE clause.
+	 * @param object $wp_query The search query.
+	 * @return string $where   The modified clause.
+	 */
+	public function limit_wp_query_to_title_only( $where, $wp_query ) {
+		global $wpdb;
+
+		$query_vars = $wp_query->query_vars;
+		if ( $title = $wp_query->get( 's' ) ) {
+			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'' . esc_sql( $wpdb->esc_like( $title ) ) . '%\'';
+		}
+
+		return $where;
+	}
+
+	/**
+	 * Modifies the search SQL query to limit to post titles.
+	 *
+	 * @since 5.9
+	 * @access public
+	 * @param string $search   Search SQL for WHERE clause.
+	 * @param object $wp_query The search query.
+	 * @return string $where The modified clause.
+	 */
+	public function limit_search_to_title_only( $search, $wp_query ) {
+		global $wpdb;
+
+		// If there is no search term, skip process.
+		if ( empty( $search ) || ! Avada()->settings->get( 'search_limit_to_post_titles' ) ) {
+			return $search;
+		}
+
+		$query_vars = $wp_query->query_vars;
+		$n          = ! empty( $query_vars['exact'] ) ? '' : '%';
+		$search     = '';
+		$searchand  = '';
+
+		foreach ( (array) $query_vars['search_terms'] as $term ) {
+			$term      = esc_sql( $wpdb->esc_like( $term ) );
+			$search   .= "{$searchand}($wpdb->posts.post_title LIKE '{$n}{$term}{$n}')";
+			$searchand = ' AND ';
+		}
+
+		if ( ! empty( $search ) ) {
+			$search = " AND ({$search}) ";
+
+			if ( ! is_user_logged_in() ) {
+				$search .= " AND ($wpdb->posts.post_password = '') ";
+			}
+		}
+
+		return $search;
+	}
 
 	/**
 	 * Modifies the search filter.
@@ -499,23 +657,26 @@ class Avada_Init {
 				return $query;
 			}
 
-			$search_content = Avada()->settings->get( 'search_content' );
-
-			if ( 'all_post_types_no_pages' === $search_content ) {
-				$query->set( 'post_type', array( 'post', 'avada_portfolio', 'product', 'tribe_events' ) );
-			} elseif ( 'Only Posts' === $search_content ) {
-				$query->set( 'post_type', 'post' );
-			} elseif ( 'portfolio_items' === $search_content ) {
-				$query->set( 'post_type', 'avada_portfolio' );
-			} elseif ( 'Only Pages' === $search_content ) {
-				$query->set( 'post_type', 'page' );
-			} elseif ( 'woocommerce_products' === $search_content ) {
-				$query->set( 'post_type', 'product' );
-			} elseif ( 'tribe_events' === $search_content ) {
-				$query->set( 'post_type', 'tribe_events' );
-			}
+			$query->set( 'post_type', $this->get_search_results_post_types() );
 		}
 		return $query;
+	}
+
+	/**
+	 * Make WordPress respect the search template on an empty search.
+	 *
+	 * @param  object $query The WP_Query object.
+	 * @return  object
+	 */
+	public function empty_search_filter( $query ) {
+
+		if ( isset( $_GET['s'] ) && empty( $_GET['s'] ) && $query->is_main_query() ) {
+			$query->is_search = true;
+			$query->is_home   = false;
+		}
+
+		return $query;
+
 	}
 
 	/**
@@ -535,6 +696,24 @@ class Avada_Init {
 		 */
 		echo Avada()->settings->get( 'space_body' ); // WPCS: XSS ok.
 	}
+
+	/**
+	 * Gets the post types for search results filtering.
+	 *
+	 * @since 5.9.1
+	 * @access public
+	 * @return array|string The post types the search should be limited to.
+	 */
+	public function get_search_results_post_types() {
+		$search_post_types = Avada()->settings->get( 'search_content' );
+
+		if ( ! Avada()->settings->get( 'search_filter_results' ) ) {
+			$search_post_types = 'any';
+		}
+
+		return apply_filters( 'avada_search_results_post_types', $search_post_types );
+	}
+
 }
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

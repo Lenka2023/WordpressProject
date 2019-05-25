@@ -247,7 +247,7 @@ class Avada_Scripts {
 				true,
 			);
 		}
-		if ( Avada()->settings->get( 'status_totop' ) || Avada()->settings->get( 'status_totop_mobile' ) ) {
+		if ( 'off' !== Avada()->settings->get( 'status_totop' ) ) {
 			$scripts[] = array(
 				'jquery-to-top',
 				$js_folder_url . '/library/jquery.toTop.js',
@@ -440,6 +440,17 @@ class Avada_Scripts {
 			);
 		}
 
+		if ( Avada()->settings->get( 'live_search' ) ) {
+			$scripts[] = array(
+				'avada-live-serach',
+				$js_folder_url . '/general/avada-live-search.js',
+				$js_folder_path . '/general/avada-live-search.js',
+				array( 'jquery' ),
+				self::$version,
+				true,
+			);
+		}
+
 		if ( is_page_template( 'contact.php' ) && Avada()->settings->get( 'recaptcha_public' ) && Avada()->settings->get( 'recaptcha_private' ) && ! function_exists( 'recaptcha_get_html' ) ) {
 			$scripts[] = array(
 				'avada-contact',
@@ -559,6 +570,7 @@ class Avada_Scripts {
 					'header_layout'              => Avada()->settings->get( 'header_layout' ),
 					'header_sticky'              => Avada()->settings->get( 'header_sticky' ),
 					'header_sticky_type2_layout' => Avada()->settings->get( 'header_sticky_type2_layout' ),
+					'header_sticky_shadow'       => Avada()->settings->get( 'header_sticky_shadow' ),
 					'side_header_break_point'    => (int) $side_header_breakpoint,
 					'header_sticky_mobile'       => Avada()->settings->get( 'header_sticky_mobile' ),
 					'header_sticky_tablet'       => Avada()->settings->get( 'header_sticky_tablet' ),
@@ -579,15 +591,19 @@ class Avada_Scripts {
 				'avada-menu',
 				'avadaMenuVars',
 				array(
+					'site_layout'             => Avada()->settings->get( 'layout' ),
 					'header_position'         => Avada()->settings->get( 'header_position' ),
 					'logo_alignment'          => Avada()->settings->get( 'logo_alignment' ),
 					'header_sticky'           => Avada()->settings->get( 'header_sticky' ),
+					'header_sticky_mobile'    => Avada()->settings->get( 'header_sticky_mobile' ),
+					'header_sticky_tablet'    => Avada()->settings->get( 'header_sticky_tablet' ),
 					'side_header_break_point' => (int) $side_header_breakpoint,
+					'megamenu_base_width'     => Avada()->settings->get( 'megamenu_width' ),
 					'mobile_menu_design'      => Avada()->settings->get( 'mobile_menu_design' ),
 					'dropdown_goto'           => __( 'Go to...', 'Avada' ),
 					'mobile_nav_cart'         => __( 'Shopping Cart', 'Avada' ),
-					'mobile_submenu_open'     => esc_attr__( 'Open Sub Menu', 'Avada' ),
-					'mobile_submenu_close'    => esc_attr__( 'Close Sub Menu', 'Avada' ),
+					'mobile_submenu_open'     => esc_attr__( 'Open Sub Menu Of', 'Avada' ),
+					'mobile_submenu_close'    => esc_attr__( 'Close Sub Menu Of', 'Avada' ),
 					'submenu_slideout'        => Avada()->settings->get( 'mobile_nav_submenu_slideout' ),
 				),
 			),
@@ -611,7 +627,9 @@ class Avada_Scripts {
 				'avada-to-top',
 				'avadaToTopVars',
 				array(
-					'status_totop_mobile' => Avada()->settings->get( 'status_totop_mobile' ),
+					'status_totop'           => Avada()->settings->get( 'status_totop' ),
+					'totop_position'         => Avada()->settings->get( 'totop_position' ),
+					'totop_scroll_down_only' => Avada()->settings->get( 'totop_scroll_down_only' ),
 				),
 			),
 			array(
@@ -633,7 +651,7 @@ class Avada_Scripts {
 					'header_sticky_tablet'       => Avada()->settings->get( 'header_sticky_tablet' ),
 					'sticky_header_shrinkage'    => Avada()->settings->get( 'header_sticky_shrinkage' ),
 					'nav_height'                 => (int) Avada()->settings->get( 'nav_height' ),
-					'content_break_point'        => Avada()->settings->get( 'content_break_point' ),
+					'sidebar_break_point'        => Avada()->settings->get( 'sidebar_break_point' ),
 				),
 			),
 			array(
@@ -741,6 +759,15 @@ class Avada_Scripts {
 				array(
 					'badge_position'   => 'hide' === Avada()->settings->get( 'recaptcha_badge_position' ) ? 'inline' : Avada()->settings->get( 'recaptcha_badge_position' ),
 					'recaptcha_public' => Avada()->settings->get( 'recaptcha_public' ),
+				),
+			),
+			array(
+				'avada-live-serach',
+				'avadaLiveSearchVars',
+				array(
+					'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+					'no_search_results' => esc_html__( 'No search results match your query. Please try again', 'Avada' ),
+					'min_char_count'    => Avada()->settings->get( 'live_search_min_char_count' ),
 				),
 			),
 		);
@@ -1591,6 +1618,7 @@ class Avada_Scripts {
 		// Dequeue block styles if no blocks exist.
 		if ( function_exists( 'has_blocks' ) && ! has_blocks() ) {
 			wp_dequeue_style( 'wp-block-library' );
+			wp_dequeue_style( 'wp-block-library-theme' );
 		}
 
 		// Dequeue CF7 styles.

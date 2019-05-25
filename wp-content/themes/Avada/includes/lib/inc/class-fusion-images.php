@@ -1044,13 +1044,13 @@ class Fusion_Images {
 	 * @since 1.8.0
 	 */
 	public function lazy_load_attributes( $atts, $attachment ) {
-		if ( $this->is_lazy_load_enabled() && ! is_admin() ) {
+		if ( $this->is_lazy_load_enabled() ) {
 
 			$replaced_atts = $atts;
 
 			if ( ! isset( $atts['class'] ) ) {
 				$replaced_atts['class'] = 'lazyload';
-			} else if ( false !== strpos( $atts['class'], 'lazyload' ) || false !== strpos( $atts['class'], 'rev-slidebg' ) || false !== strpos( $atts['class'], 'ls-' ) ) {
+			} elseif ( false !== strpos( $atts['class'], 'lazyload' ) || false !== strpos( $atts['class'], 'rev-slidebg' ) || false !== strpos( $atts['class'], 'ls-' ) || false !== strpos( $atts['class'], 'attachment-portfolio' ) ) {
 				return $atts;
 			} else {
 				$replaced_atts['class'] .= ' lazyload';
@@ -1066,7 +1066,7 @@ class Fusion_Images {
 			$width     = isset( $meta_data['width'] ) ? $meta_data['width'] : 0;
 			$height    = isset( $meta_data['height'] ) ? $meta_data['height'] : 0;
 
-			$replaced_atts['data-src'] = $atts['src'];
+			$replaced_atts['data-orig-src'] = $atts['src'];
 
 			if ( isset( $atts['srcset'] ) ) {
 				$replaced_atts['srcset']      = self::get_lazy_placeholder( $width, $height );
@@ -1097,14 +1097,14 @@ class Fusion_Images {
 	 * @return string The html markup of the image.
 	 */
 	public function apply_lazy_loading( $html, $post_id = null, $post_thumbnail_id = null, $size = null, $attr = null ) {
-		if ( $this->is_lazy_load_enabled() && false === strpos( $html, 'lazyload' ) && false === strpos( $html, 'rev-slidebg' ) ) {
+		if ( $this->is_lazy_load_enabled() && false === strpos( $html, 'lazyload' ) && false === strpos( $html, 'rev-slidebg' ) && false === strpos( $html, 'fusion-gallery-image-size-fixed' ) ) {
 
 			$src    = '';
 			$width  = 0;
 			$height = 0;
 
 			// Get the image data from src.
-			if ( $post_thumbnail_id ) {
+			if ( $post_thumbnail_id && 'full' === $size ) {
 				$full_image_src = wp_get_attachment_image_src( $post_thumbnail_id, 'full' );
 
 				// If image found, use the dimensions and src of image.
@@ -1131,7 +1131,7 @@ class Fusion_Images {
 						$width  = $width[1];
 						$height = $height[1];
 					}
-				} else if ( $src && '' !== $src ) {
+				} elseif ( $src && '' !== $src ) {
 
 					// No dimensions on tag, try to get from image url.
 					$full_image_src = $this->get_attachment_data_from_url( $src );
@@ -1156,7 +1156,7 @@ class Fusion_Images {
 						' sizes=',
 					),
 					array(
-						' src="' . $src . '" data-src=',
+						' src="' . $src . '" data-orig-src=',
 						' srcset="' . self::get_lazy_placeholder( $width, $height ) . '" data-srcset=',
 						' data-sizes="auto" data-orig-sizes=',
 					),
@@ -1165,7 +1165,7 @@ class Fusion_Images {
 			} else {
 
 				// Simplified non srcset replacement.
-				$html = str_replace( ' src=', ' src="' . self::get_lazy_placeholder( $width, $height ) . '" data-src=', $html );
+				$html = str_replace( ' src=', ' src="' . self::get_lazy_placeholder( $width, $height ) . '" data-orig-src=', $html );
 			}
 
 			if ( strpos( $html, ' class=' ) ) {
@@ -1241,7 +1241,7 @@ class Fusion_Images {
 	 * @param string $id  The ID attribute of the slider element.
 	 * @return string Altered html markup.
 	 */
-	public function prevent_ls_lazy_loading( $html, $slider, $id ) {
+	public function prevent_ls_lazy_loading( $html, $slider = false, $id = false ) {
 		if ( $this->is_lazy_load_enabled() ) {
 			preg_match_all( '/<img\s+[^>]*src="([^"]*)"[^>]*>/isU', $html, $images );
 			if ( array_key_exists( 1, $images ) ) {
@@ -1286,7 +1286,7 @@ class Fusion_Images {
 	 * @return void
 	 */
 	public function enqueue_image_scripts() {
-		if ( $this->is_lazy_load_enabled() && ! is_admin() ) {
+		if ( $this->is_lazy_load_enabled() ) {
 			Fusion_Dynamic_JS::enqueue_script( 'lazysizes' );
 		}
 	}

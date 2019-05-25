@@ -682,7 +682,6 @@ span[class*=" fusiona-"] {
   box-shadow: none !important;
 }
 .avada-range .fusion-slider-container .noUi-handle.noUi-active {
-  -webkit-transform: scale3d(2.5, 2.5, 1);
   transform: scale3d(2.5, 2.5, 1);
 }
 .pyre_field textarea {
@@ -844,13 +843,10 @@ span[class*=" fusiona-"] {
   margin-bottom: 30px;
 }
 .avada-admin-toggle .avada-admin-toggle-heading {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
       justify-content: space-between;
-  -webkit-align-items: center;
   -ms-flex-align: center;
       align-items: center;
   padding: 25px;
@@ -906,7 +902,7 @@ span[class*=" fusiona-"] {
   float: right;
   width: auto;
 }
-.rtl .pyre_field.avada-color .wp-color-result-text {
+.rtl .pyre_field.avada-color button.wp-color-result-text {
   border-radius: 0;
 }
 .rtl .pyre_field.avada-color .wp-picker-container.wp-picker-active .wp-picker-input-wrap input[type="text"] {
@@ -991,7 +987,6 @@ span[class*=" fusiona-"] {
 .icon_preview:hover {
   color: #278AB7;
   z-index: 3;
-  -webkit-transform: scale(1.3);
   -ms-transform: scale(1.3);
   transform: scale(1.3);
 }
@@ -1093,7 +1088,6 @@ span[class*=" fusiona-"] {
   font-size: 2em;
   margin-top: 22px;
   display: block;
-  -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
@@ -1533,7 +1527,6 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 .avada-po-dialog .ui-dialog-titlebar-close {
   position: absolute !important;
   top: 50% !important;
-  -webkit-transform: translateY(-50%) !important;
   -ms-transform: translateY(-50%) !important;
   transform: translateY(-50%) !important;
   right: 0 !important;
@@ -1658,24 +1651,19 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 }
 .avada-tax-meta-field .wp-picker-container.wp-picker-active,
 .pyre_field .wp-picker-container.wp-picker-active {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
 }
 .avada-tax-meta-field .wp-picker-container.wp-picker-active .wp-picker-input-wrap,
 .pyre_field .wp-picker-container.wp-picker-active .wp-picker-input-wrap {
-  display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
   width: 200px;
 }
 .avada-tax-meta-field .wp-picker-container.wp-picker-active .wp-picker-input-wrap label,
@@ -1696,6 +1684,7 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 .avada-tax-meta-field .wp-picker-container .iris-picker,
 .pyre_field .wp-picker-container .iris-picker {
   width: 100% !important;
+  overflow: hidden;
 }
 .avada-tax-meta-field .wp-picker-container .iris-picker .iris-palette,
 .pyre_field .wp-picker-container .iris-picker .iris-palette,
@@ -1721,7 +1710,6 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 }
 .avada-tax-meta-field .wp-picker-container .iris-picker .iris-picker-inner,
 .pyre_field .wp-picker-container .iris-picker .iris-picker-inner {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -1749,9 +1737,23 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 .pyre_field .wp-picker-container .iris-picker.iris-border {
   padding-bottom: 30px !important;
 }
+.avada-tax-meta-field .wp-picker-container .iris-picker .iris-square-value,
+.pyre_field .wp-picker-container .iris-picker .iris-square-value {
+  display: block;
+  width: 0 !important;
+  height: 0 !important;
+  outline: none;
+  box-shadow: none;
+}
+.avada-tax-meta-field .wp-picker-container .iris-picker .iris-square-handle,
+.pyre_field .wp-picker-container .iris-picker .iris-square-handle {
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+}
 .avada-tax-meta-field .wp-picker-container .iris-palette-container,
 .pyre_field .wp-picker-container .iris-palette-container {
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
   width: calc(100% - 45px) !important;
@@ -1811,6 +1813,7 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
 .pyre_field .wp-color-result-text {
   height: 100%;
   line-height: 30px;
+  border-radius: 0;
 }
 .avada-tax-meta-field .wp-picker-container input[type="text"],
 .pyre_field .wp-picker-container input[type="text"] {
@@ -1841,9 +1844,8 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
   margin-bottom: 0;
 }
 .rtl #pyre_page_options .wp-picker-container {
-  -webkit-justify-content: baseline;
-      -ms-flex-pack: baseline;
-          justify-content: baseline;
+  -ms-flex-pack: baseline;
+      justify-content: baseline;
 }
 .rtl #pyre_page_options .wp-picker-container .wp-color-result {
   margin-left: 0;
@@ -1872,9 +1874,8 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
   width: calc(100% - 4px) !important;
 }
 .rtl .avada-tax-meta-field .wp-picker-container {
-  -webkit-justify-content: baseline;
-      -ms-flex-pack: baseline;
-          justify-content: baseline;
+  -ms-flex-pack: baseline;
+      justify-content: baseline;
 }
 .rtl .avada-tax-meta-field .wp-picker-container .wp-color-result {
   margin: 0;
@@ -1910,9 +1911,8 @@ ul#adminmenu > li.toplevel_page_avada.current > a.current:after {
   padding-left: 0px;
 }
 .rtl #wpwrap .fusionredux-container #fusionredux-form-wrapper .form-table .fusion_options .wp-picker-container {
-  -webkit-justify-content: baseline;
-      -ms-flex-pack: baseline;
-          justify-content: baseline;
+  -ms-flex-pack: baseline;
+      justify-content: baseline;
 }
 .rtl #wpwrap .fusionredux-container #fusionredux-form-wrapper .form-table .fusion_options .wp-picker-container .wp-picker-input-wrap {
   width: calc(100% - 103px);

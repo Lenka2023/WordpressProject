@@ -781,6 +781,20 @@ function avada_options_section_header( $sections ) {
 							),
 						),
 					),
+					'header_shadow'           => array(
+						'label'       => esc_html__( 'Sticky Header Shadow', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display a sticky header drop shadow. This option is incompatible with Internet Explorer versions older than IE11.', 'Avada' ),
+						'id'          => 'header_sticky_shadow',
+						'default'     => '1',
+						'type'        => 'switch',
+						'required'    => array(
+							array(
+								'setting'  => 'header_sticky',
+								'operator' => '!=',
+								'value'    => 0,
+							),
+						),
+					),
 					'header_sticky_bg_color'      => array(
 						'label'       => esc_html__( 'Sticky Header Background Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the background color for the sticky header.', 'Avada' ),

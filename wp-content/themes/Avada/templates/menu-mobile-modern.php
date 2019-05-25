@@ -19,7 +19,7 @@ $displayed_menu = get_post_meta( $c_page_id, 'pyre_displayed_menu', true );
 <?php if ( 'modern' === Avada()->settings->get( 'mobile_menu_design' ) && ( has_nav_menu( 'main_navigation' ) || ( $displayed_menu && '' !== $displayed_menu && 'default' !== $displayed_menu ) ) ) : ?>
 	<div class="fusion-mobile-menu-icons">
 		<?php // Make sure mobile menu toggle is not loaded when ubermenu is used. ?>
-		<?php if ( ! function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) || ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ! ubermenu_get_menu_instance_by_theme_location( 'main_navigation' ) ) ) : ?>
+		<?php if ( ! function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) || ( function_exists( 'ubermenu_get_menu_instance_by_theme_location' ) && ( ! ubermenu_get_menu_instance_by_theme_location( 'main_navigation' ) || ( ubermenu_get_menu_instance_by_theme_location( 'main_navigation' ) && function_exists( 'ubermenu_op' ) && 'on' === ubermenu_op( 'disable_mobile', 'main' ) && has_nav_menu( 'mobile_navigation' ) ) ) ) ) : ?>
 			<a href="#" class="fusion-icon fusion-icon-bars" aria-label="<?php esc_attr_e( 'Toggle mobile menu', 'Avada' ); ?>" aria-expanded="false"></a>
 		<?php endif; ?>
 

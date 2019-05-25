@@ -98,7 +98,7 @@ class Avada_PWA {
 		add_filter( 'wp_service_worker_navigation_preload', '__return_false' );
 
 		// Add theme-support for theme-color.
-		$this->add_theme_color_support();
+		$this->add_theme_supports();
 	}
 
 	/**
@@ -381,13 +381,18 @@ class Avada_PWA {
 	}
 
 	/**
-	 * Adds theme-color support.
+	 * Adds theme support.
 	 *
 	 * @access public
-	 * @since 5.8.1
+	 * @since 5.9.1
 	 * @return void
 	 */
-	public function add_theme_color_support() {
+	public function add_theme_supports() {
+
+		// Add support for service-worker.
+		add_theme_support( 'service_worker', true );
+
+		// Add support for theme-color.
 		$settings = Fusion_Settings::get_instance();
 		$color    = $settings->get( 'pwa_theme_color' );
 		if ( $color ) {

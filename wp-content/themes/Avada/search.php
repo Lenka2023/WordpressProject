@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$checklist_icons_color   = Avada()->settings->get( 'checklist_icons_color' );
 						$checklist_circle_color  = Avada()->settings->get( 'checklist_circle_color' );
 						$circle_class            = ( Avada()->settings->get( 'checklist_circle' ) ) ? 'circle-yes' : 'circle-no';
-						$font_size               = str_replace( 'px', '', Avada()->settings->get( 'checklist_item_size' ) );
+						$font_size               = Fusion_Sanitize::convert_font_size_to_px( Avada()->settings->get( 'checklist_item_size' ), Avada()->settings->get( 'body_typography', 'font-size' ) );
 						$checklist_divider       = ( 'yes' === Avada()->settings->get( 'checklist_divider' ) ) ? ' fusion-checklist-divider' : '';
 						$checklist_divider_color = Avada()->settings->get( 'checklist_divider_color' );
 
@@ -69,9 +69,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						// Set markup depending on icon circle being used or not.
 						if ( Avada()->settings->get( 'checklist_circle' ) ) {
-							$before = '<span class="icon-wrapper circle-yes" style="background-color:' . $checklist_circle_color . ';font-size:' . $font_size . 'px;height:' . $line_height . 'px;width:' . $line_height . 'px;margin-' . $icon_margin_position . ':' . $icon_margin . 'px;" ><i class="fusion-li-icon fa fa-angle-right" style="color:' . $checklist_icons_color . ';"></i></span><div class="fusion-li-item-content" style="margin-' . $content_margin_position . ':' . $content_margin_position . 'px;">';
+							$before = '<span class="icon-wrapper circle-yes" style="background-color:' . $checklist_circle_color . ';font-size:' . $font_size . 'px;height:' . $line_height . 'px;width:' . $line_height . 'px;margin-' . $icon_margin_position . ':' . $icon_margin . 'px;" ><i class="fusion-li-icon fa fa-angle-right" style="color:' . $checklist_icons_color . ';"></i></span><div class="fusion-li-item-content" style="margin-' . $content_margin_position . ':' . $content_margin . 'px;">';
 						} else {
-							$before = '<span class="icon-wrapper circle-no" style="font-size:' . $font_size . 'px;height:' . $line_height . 'px;width:' . $line_height . 'px;margin-' . $icon_margin_position . ':' . $icon_margin . 'px;" ><i class="fusion-li-icon fa fa-angle-right" style="color:' . $checklist_icons_color . ';"></i></span><div class="fusion-li-item-content" style="margin-' . $content_margin_position . ':' . $content_margin_position . 'px;">';
+							$before = '<span class="icon-wrapper circle-no" style="font-size:' . $font_size . 'px;height:' . $line_height . 'px;width:' . $line_height . 'px;margin-' . $icon_margin_position . ':' . $icon_margin . 'px;" ><i class="fusion-li-icon fa fa-angle-right" style="color:' . $checklist_icons_color . ';"></i></span><div class="fusion-li-item-content" style="margin-' . $content_margin_position . ':' . $content_margin . 'px;">';
 						}
 
 						$error_page_menu_args = array(

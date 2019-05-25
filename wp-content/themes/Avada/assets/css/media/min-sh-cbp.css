@@ -25,3 +25,6 @@
   position: relative;
   margin: 0;
 }
+.no-desktop-totop .to-top-container {
+  display: none;
+}

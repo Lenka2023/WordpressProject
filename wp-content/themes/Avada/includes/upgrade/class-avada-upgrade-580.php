@@ -139,7 +139,7 @@ class Avada_Upgrade_580 extends Avada_Upgrade_Abstract {
 			$nav_font_size = $base_font_size * $nav_font_size;
 		} elseif ( '%' === $nav_font_size_unit ) {
 			$nav_font_size = $base_font_size * $nav_font_size / 100;
-		} elseif ( 'px' !== $base_font_size_unit ) {
+		} elseif ( 'px' !== $nav_font_size_unit ) {
 			$nav_font_size = $base_font_size;
 		}
 

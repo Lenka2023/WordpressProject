@@ -297,6 +297,31 @@ function avada_options_section_portfolio( $sections ) {
 						'default'     => '1',
 						'type'        => 'switch',
 					),
+					'portfolio_width_100'            => array(
+						'label'       => esc_html__( '100% Width Page', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display portfolio posts at 100% browser width according to the window size. Turn off to follow site width.', 'Avada' ),
+						'id'          => 'portfolio_width_100',
+						'default'     => '0',
+						'type'        => 'switch',
+					),
+					'portfolio_featured_image_width' => array(
+						'label'       => esc_html__( 'Featured Image Column Size', 'Avada' ),
+						'description' => esc_html__( 'Controls if the featured image is half or full width on single portfolio posts.', 'Avada' ),
+						'id'          => 'portfolio_featured_image_width',
+						'default'     => 'full',
+						'type'        => 'radio-buttonset',
+						'choices'     => array(
+							'full' => esc_html__( 'Full Width', 'Avada' ),
+							'half' => esc_html__( 'Half Width', 'Avada' ),
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'portfolio_featured_images',
+								'operator' => '==',
+								'value'    => '1',
+							),
+						),
+					),
 					'portfolio_featured_images'      => array(
 						'label'       => esc_html__( 'Featured Image / Video on Single Post Page', 'Avada' ),
 						'description' => esc_html__( 'Turn on to display featured images and videos on single portfolio posts.', 'Avada' ),
@@ -317,31 +342,6 @@ function avada_options_section_portfolio( $sections ) {
 								'value'    => '1',
 							),
 						),
-					),
-					'portfolio_featured_image_width' => array(
-						'label'       => esc_html__( 'Featured Image Column Size', 'Avada' ),
-						'description' => esc_html__( 'Controls if the featured image is half or full width on single portfolio posts.', 'Avada' ),
-						'id'          => 'portfolio_featured_image_width',
-						'default'     => 'full',
-						'type'        => 'radio-buttonset',
-						'choices'     => array(
-							'full' => esc_html__( 'Full Width', 'Avada' ),
-							'half' => esc_html__( 'Half Width', 'Avada' ),
-						),
-						'required'    => array(
-							array(
-								'setting'  => 'portfolio_featured_images',
-								'operator' => '==',
-								'value'    => '1',
-							),
-						),
-					),
-					'portfolio_width_100'            => array(
-						'label'       => esc_html__( '100% Width Page', 'Avada' ),
-						'description' => esc_html__( 'Turn on to display portfolio posts at 100% browser width according to the window size. Turn off to follow site width.', 'Avada' ),
-						'id'          => 'portfolio_width_100',
-						'default'     => '0',
-						'type'        => 'switch',
 					),
 					'portfolio_project_desc_title'   => array(
 						'label'       => esc_html__( 'Project Description Title', 'Avada' ),
@@ -364,13 +364,6 @@ function avada_options_section_portfolio( $sections ) {
 						'default'     => '0',
 						'type'        => 'switch',
 					),
-					'portfolio_comments'             => array(
-						'label'       => esc_html__( 'Comments', 'Avada' ),
-						'description' => esc_html__( 'Turn on to display comments on single portfolio posts.', 'Avada' ),
-						'id'          => 'portfolio_comments',
-						'default'     => '0',
-						'type'        => 'switch',
-					),
 					'portfolio_author'               => array(
 						'label'       => esc_html__( 'Author', 'Avada' ),
 						'description' => esc_html__( 'Turn on to display the author name on single portfolio posts.', 'Avada' ),
@@ -390,6 +383,13 @@ function avada_options_section_portfolio( $sections ) {
 						'description' => esc_html__( 'Turn on to display related projects on single portfolio posts.', 'Avada' ),
 						'id'          => 'portfolio_related_posts',
 						'default'     => '1',
+						'type'        => 'switch',
+					),
+					'portfolio_comments'             => array(
+						'label'       => esc_html__( 'Comments', 'Avada' ),
+						'description' => esc_html__( 'Turn on to display comments on single portfolio posts.', 'Avada' ),
+						'id'          => 'portfolio_comments',
+						'default'     => '0',
 						'type'        => 'switch',
 					),
 				),

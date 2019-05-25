@@ -434,7 +434,6 @@ body.fusion-body .fusion-secondary-header .fusion-alignright .fusion-social-link
 .fusion-mobile-menu-design-flyout.fusion-header-v7 .fusion-flyout-mobile-menu-icons {
   z-index: 99999;
   position: relative;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -474,7 +473,7 @@ body.fusion-body .fusion-secondary-header .fusion-alignright .fusion-social-link
 }
 /* uberMenu Styles
 ================================================================================================= */
-.fusion-body .fusion-header-wrapper .fusion-header .fusion-main-menu.fusion-ubermenu {
+.fusion-body .fusion-header-wrapper .fusion-main-menu.fusion-ubermenu-mobile {
   display: block;
 }
 .fusion-mobile-nav-holder li.fusion-mobile-nav-item .wpml-ls-item a::before {

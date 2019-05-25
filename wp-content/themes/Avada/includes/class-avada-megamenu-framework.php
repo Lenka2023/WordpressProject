@@ -147,7 +147,7 @@ if ( ! class_exists( 'Avada_Megamenu_Framework' ) ) {
 								<div class="fusion-builder-option">
 									<div class="option-details">
 										<h3><?php esc_attr_e( 'Icon Select', 'Avada' ); ?></h3>
-										<p class="description"><?php esc_attr_e( 'Select an icon for your menu item. Icon styles can be controlled in Theme Options > Menu > Main Menu Icons.', 'Avada' ); ?></p>
+										<p class="description"><?php esc_attr_e( 'Select an icon for your menu item. For top-level menu items, icon styles can be controlled in Theme Options > Menu > Main Menu Icons.', 'Avada' ); ?></p>
 									</div>
 									<div class="option-field fusion-builder-option-container fusion-iconpicker">
 										<input type="text" class="fusion-icon-search" placeholder="Search Icons" />

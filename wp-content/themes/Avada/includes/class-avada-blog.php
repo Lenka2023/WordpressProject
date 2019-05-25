@@ -29,12 +29,6 @@ class Avada_Blog {
 
 		add_filter( 'excerpt_length', array( $this, 'excerpt_length' ), 999 );
 		add_action( 'pre_get_posts', array( $this, 'alter_search_loop' ), 1 );
-
-		if ( ! is_admin() ) {
-			add_filter( 'pre_get_posts', array( $this, 'search_filter' ) );
-			add_filter( 'pre_get_posts', array( $this, 'empty_search_filter' ) );
-		}
-
 	}
 
 	/**
@@ -65,11 +59,12 @@ class Avada_Blog {
 	 * @return void Content is directly echoed.
 	 */
 	public function render_post_content() {
-		if ( is_search() && ! Avada()->settings->get( 'search_excerpt' ) ) {
-			return;
-		}
 
-		echo fusion_get_post_content(); // WPCS: XSS ok.
+		if ( is_search() ) {
+			echo fusion_get_post_content( '', 'search' ); // WPCS: XSS ok.
+		} else {
+			echo fusion_get_post_content(); // WPCS: XSS ok.
+		}
 	}
 
 	/**
@@ -82,47 +77,6 @@ class Avada_Blog {
 		if ( ! is_admin() && $query->is_main_query() && $query->is_search() && Avada()->settings->get( 'search_results_per_page' ) ) {
 			$query->set( 'posts_per_page', Avada()->settings->get( 'search_results_per_page' ) );
 		}
-	}
-
-	/**
-	 * Apply filters to the search query.
-	 * Determines if we only want to display posts/pages and changes the query accordingly.
-	 *
-	 * @param  object $query The WP_Query object.
-	 * @return  object
-	 */
-	public function search_filter( $query ) {
-
-		if ( is_search() && $query->is_search ) {
-
-			// Show only posts in search results.
-			if ( 'Only Posts' === Avada()->settings->get( 'search_content' ) ) {
-				$query->set( 'post_type', 'post' );
-			} elseif ( 'Only Pages' === Avada()->settings->get( 'search_content' ) ) {
-				// Show only pages in search results.
-				$query->set( 'post_type', 'page' );
-			}
-		}
-
-		return $query;
-
-	}
-
-	/**
-	 * Make WordPress respect the search template on an empty search.
-	 *
-	 * @param  object $query The WP_Query object.
-	 * @return  object
-	 */
-	public function empty_search_filter( $query ) {
-
-		if ( isset( $_GET['s'] ) && empty( $_GET['s'] ) && $query->is_main_query() ) {
-			$query->is_search = true;
-			$query->is_home   = false;
-		}
-
-		return $query;
-
 	}
 
 	/**

@@ -159,15 +159,15 @@ if ( ! function_exists( 'avada_get_page_title_bar_contents' ) ) {
 		$page_title_custom_subheader = get_post_meta( $post_id, 'pyre_page_title_custom_subheader', true );
 		$page_title_text             = get_post_meta( $post_id, 'pyre_page_title_text', true );
 
-		if ( '' != $page_title_custom_text ) {
+		if ( '' !== $page_title_custom_text ) {
 			$title = $page_title_custom_text;
 		}
 
-		if ( '' != $page_title_custom_subheader ) {
+		if ( '' !== $page_title_custom_subheader ) {
 			$subtitle = $page_title_custom_subheader;
 		}
 
-		if ( '' == $page_title_text || 'default' === $page_title_text ) {
+		if ( '' === $page_title_text || 'default' === $page_title_text ) {
 			if ( Avada()->settings->get( 'page_title_bar_text' ) ) {
 				$page_title_text = 'yes';
 			} else {
@@ -248,18 +248,18 @@ if ( ! function_exists( 'avada_get_page_title_bar_contents' ) ) {
 
 		if ( ! is_archive() && ! is_search() && ! ( is_home() && ! is_front_page() ) ) {
 			$page_title = get_post_meta( $post_id, 'pyre_page_title', true );
-			if ( 'no' == $page_title_text && ( 'yes' === $page_title || 'yes_without_bar' === $page_title || ( 'hide' !== $page_title_option && 'no' !== $page_title ) ) ) {
+			if ( 'no' === $page_title_text && ( 'yes' === $page_title || 'yes_without_bar' === $page_title || ( 'hide' !== $page_title_option && 'no' !== $page_title ) ) ) {
 				$title    = '';
 				$subtitle = '';
 			}
 		} else {
-			if ( 'hide' != $page_title_option && 'no' == $page_title_text ) {
+			if ( 'hide' !== $page_title_option && 'no' === $page_title_text ) {
 				$title    = '';
 				$subtitle = '';
 			}
 		}
 
-		return array( $title, $subtitle, $secondary_content );
+		return apply_filters( 'avada_page_title_bar_contents', array( $title, $subtitle, $secondary_content ) );
 	}
 } // End if().
 

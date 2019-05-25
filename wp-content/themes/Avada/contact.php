@@ -28,7 +28,7 @@ $avada_contact = new Avada_Contact();
 			<div class="post-content">
 				<?php the_content(); ?>
 
-				<?php if ( ! Avada()->settings->get( 'email_address' ) ) : // Email address not set. ?>
+				<?php if ( current_user_can( 'edit_theme_options' ) && ! Avada()->settings->get( 'email_address' ) ) : // Email address not set. ?>
 					<?php if ( shortcode_exists( 'fusion_alert' ) ) : ?>
 						<?php echo do_shortcode( '[fusion_alert type="error"]' . esc_html__( 'Form email address is not set in Theme Options. Please fill in a valid address to make contact form work.', 'Avada' ) . '[/fusion_alert]' ); ?>
 					<?php else : ?>

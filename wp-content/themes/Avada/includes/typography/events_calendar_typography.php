@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function avada_events_calendar_body_typography( $typography_elements ) {
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$typography_elements['size'][] = '.tribe-events-loop .tribe-events-event-meta';
+		$typography_elements['family'][] = '#tribe-events-content-wrapper #tribe_events_filters_wrapper .tribe-events-filters-label';
 	}
 
 	return $typography_elements;
@@ -63,11 +64,8 @@ add_filter( 'avada_h3_typography_elements', 'avada_events_calendar_h3_typography
 function avada_events_calendar_h4_typography( $typography_elements ) {
 	if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$typography_elements['size'][]   = '.fusion-content-widget-area .tribe-events-single-section-title';
-		$typography_elements['size'][]   = '#tribe_events_filters_wrapper .tribe-events-filters-label';
 		$typography_elements['color'][]  = '.fusion-content-widget-area .tribe-events-single-section-title';
-		$typography_elements['color'][]  = '#tribe_events_filters_wrapper .tribe-events-filters-label';
 		$typography_elements['family'][] = '.fusion-content-widget-area .tribe-events-single-section-title';
-		$typography_elements['family'][] = '#tribe_events_filters_wrapper .tribe-events-filters-label';
 	}
 
 	return $typography_elements;

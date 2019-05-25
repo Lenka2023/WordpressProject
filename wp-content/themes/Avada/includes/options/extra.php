@@ -125,6 +125,38 @@ function avada_options_section_extra( $sections ) {
 						'default'     => '1',
 						'type'        => 'switch',
 					),
+					'totop_position'     => array(
+						'label'       => esc_html__( 'ToTop Button Position', 'Avada' ),
+						'description' => esc_html__( 'Controls the position of the ToTop button. On mobiles also non-floating layouts will be floating.', 'Avada' ),
+						'id'          => 'totop_position',
+						'default'     => 'right',
+						'type'        => 'radio-buttonset',
+						'choices'     => array(
+							'left'           => esc_html__( 'Left', 'Avada' ),
+							'left_floating'  => esc_html__( 'Left Floating', 'Avada' ),
+							'right'          => esc_html__( 'Right', 'Avada' ),
+							'right_floating' => esc_html__( 'Right Floating', 'Avada' ),
+						),
+					),
+					'totop_border_radius'         => array(
+						'label'       => esc_html__( 'ToTop Border Radius', 'Avada' ),
+						'description' => esc_html__( 'Controls the border radius of the ToTop button. For non-floating layouts the border radius will only apply to the upper corners.', 'Avada' ),
+						'id'          => 'totop_border_radius',
+						'default'     => '4',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '0',
+							'max'  => '50',
+							'step' => '1',
+						),
+					),
+					'totop_scroll_down_only'           => array(
+						'label'       => esc_html__( 'ToTop Show on Scroll Down Only', 'Avada' ),
+						'description' => esc_html__( 'Turn on to show the ToTop button on scroll down only. Otherwise it will always show if the page is scrolled.', 'Avada' ),
+						'id'          => 'totop_scroll_down_only',
+						'default'     => '0',
+						'type'        => 'switch',
+					),
 				),
 			),
 			'related_posts_section'  => array(
@@ -186,7 +218,7 @@ function avada_options_section_extra( $sections ) {
 						'description' => esc_html__( 'Controls if the featured image size is fixed (cropped) or auto (full image ratio) for related posts and projects. IMPORTANT: Fixed works best with a standard 940px site width. Auto works best with larger site widths.', 'Avada' ),
 						'id'          => 'related_posts_image_size',
 						'default'     => 'cropped',
-						'type'        => 'select',
+						'type'        => 'radio-buttonset',
 						'choices'     => array(
 							'cropped' => esc_html__( 'Fixed', 'Avada' ),
 							'full'    => esc_html__( 'Auto', 'Avada' ),
@@ -429,9 +461,39 @@ function avada_options_section_extra( $sections ) {
 						'id'          => 'pagination_important_note_info',
 						'type'        => 'custom',
 					),
+					'pagination_sizing'               => array(
+						'type'        => 'radio-buttonset',
+						'label'       => esc_html__( 'Pagination Sizing', 'Avada' ),
+						'description' => esc_html__( 'Set on which dimension the pagination box size should be based.', 'Avada' ),
+						'id'          => 'pagination_sizing',
+						'default'     => 'width_height',
+						'choices'     => array(
+							'width_height' => esc_html__( 'Width/Height Based', 'Avada' ),
+							'padding'      => esc_html__( 'Padding Based', 'Avada' ),
+						),
+					),
+					'pagination_width_height'         => array(
+						'label'       => esc_html__( 'Pagination Box Width/Height', 'Avada' ),
+						'description' => esc_html__( 'Controls the width and height of the displayed page links.', 'Avada' ),
+						'id'          => 'pagination_width_height',
+						'default'     => '30',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '5',
+							'max'  => '100',
+							'step' => '1',
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'pagination_sizing',
+								'operator' => '!=',
+								'value'    => 'padding',
+							),
+						),
+					),
 					'pagination_box_padding'         => array(
 						'label'       => esc_html__( 'Pagination Box Padding', 'Avada' ),
-						'description' => esc_html__( 'Controls the padding inside the pagination box.', 'Avada' ),
+						'description' => esc_html__( 'Controls the padding inside the pagination boxes.', 'Avada' ),
 						'id'          => 'pagination_box_padding',
 						'units'       => false,
 						'default'     => array(
@@ -439,6 +501,37 @@ function avada_options_section_extra( $sections ) {
 							'height' => '2px',
 						),
 						'type'        => 'dimensions',
+						'required'    => array(
+							array(
+								'setting'  => 'pagination_sizing',
+								'operator' => '=',
+								'value'    => 'padding',
+							),
+						),
+					),
+					'pagination_border_width'               => array(
+						'label'       => esc_html__( 'Pagination Border Width', 'Avada' ),
+						'description' => esc_html__( 'Controls the border width of the displayed page links. In Pixels.', 'Avada' ),
+						'id'          => 'pagination_border_width',
+						'default'     => '1',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '0',
+							'max'  => '25',
+							'step' => '1',
+						),
+					),
+					'pagination_border_radius'               => array(
+						'label'       => esc_html__( 'Pagination Border Radius', 'Avada' ),
+						'description' => esc_html__( 'Controls the border radius of the displayed page links. Values of half the overall width or higher will yield circular links.', 'Avada' ),
+						'id'          => 'pagination_border_radius',
+						'default'     => '0',
+						'type'        => 'slider',
+						'choices'     => array(
+							'min'  => '0',
+							'max'  => '50',
+							'step' => '1',
+						),
 					),
 					'pagination_text_display'        => array(
 						'label'       => esc_html__( 'Pagination Text Display', 'Avada' ),
@@ -571,23 +664,6 @@ function avada_options_section_extra( $sections ) {
 							'min'  => '0',
 							'max'  => '50',
 							'step' => '1',
-						),
-					),
-					'search_form_info'                  => array(
-						'label'       => esc_html__( 'Search Form', 'Avada' ),
-						'description' => '',
-						'id'          => 'search_form_info',
-						'type'        => 'info',
-					),
-					'search_form_design'                => array(
-						'label'       => esc_html__( 'Search Form Design', 'Avada' ),
-						'description' => esc_html__( 'Controls the design of the search forms.', 'Avada' ),
-						'id'          => 'search_form_design',
-						'default'     => 'classic',
-						'type'        => 'radio-buttonset',
-						'choices'     => array(
-							'classic' => esc_html__( 'Classic', 'Avada' ),
-							'clean'   => esc_html__( 'Clean', 'Avada' ),
 						),
 					),
 				),

@@ -674,264 +674,194 @@ class Fusion_Data {
 		$dark['ec_sidebar_bg_color'] = '#f6f6f6';
 		$dark['ec_sidebar_link_color'] = '#ffffff';
 
-		$green = array();
-		$green['primary_color'] = '#a0ce4e';
-		$green['pricing_box_color'] = '#92C563';
-		$green['image_gradient_top_color'] = '#D1E990';
-		$green['image_gradient_bottom_color'] = '#AAD75B';
-		$green['button_gradient_top_color'] = '#D1E990';
-		$green['button_gradient_bottom_color'] = '#AAD75B';
-		$green['button_gradient_top_color_hover'] = '#AAD75B';
-		$green['button_gradient_bottom_color_hover'] = '#D1E990';
-		$green['button_accent_color'] = '#6e9a1f';
-		$green['button_accent_hover_color'] = '#638e1a';
-		$green['button_bevel_color'] = '#54770f';
-		$green['checklist_circle_color'] = '#a0ce4e';
-		$green['counter_box_color'] = '#a0ce4e';
-		$green['countdown_background_color'] = '#a0ce4e';
-		$green['dropcap_color'] = '#a0ce4e';
-		$green['flip_boxes_back_bg'] = '#a0ce4e';
-		$green['progressbar_filled_color'] = '#a0ce4e';
-		$green['counter_filled_color'] = '#a0ce4e';
-		$green['ec_sidebar_widget_bg_color'] = '#a0ce4e';
-		$green['menu_hover_first_color'] = '#a0ce4e';
-		$green['header_top_bg_color'] = '#a0ce4e';
-		$green['content_box_hover_animation_accent_color'] = '#a0ce4e';
-		$green['map_overlay_color'] = '#a0ce4e';
-		$green['flyout_menu_icon_hover_color'] = '#a0ce4e';
+		$colors = array(
+			'green' => array(
+				'#92C563',
+				'#D1E990',
+				'#AAD75B',
+				'#D1E990',
+				'#AAD75B',
+				'#AAD75B',
+				'#D1E990',
+				'#6e9a1f',
+				'#638e1a',
+				'#54770f',
+				'#a0ce4e',
+			),
 
-		$darkgreen = array();
-		$darkgreen['primary_color'] = '#9db668';
-		$darkgreen['pricing_box_color'] = '#a5c462';
-		$darkgreen['image_gradient_top_color'] = '#cce890';
-		$darkgreen['image_gradient_bottom_color'] = '#afd65a';
-		$darkgreen['button_gradient_top_color'] = '#cce890';
-		$darkgreen['button_gradient_bottom_color'] = '#AAD75B';
-		$darkgreen['button_gradient_top_color_hover'] = '#AAD75B';
-		$darkgreen['button_gradient_bottom_color_hover'] = '#cce890';
-		$darkgreen['button_accent_color'] = '#577810';
-		$darkgreen['button_accent_hover_color'] = '#577810';
-		$darkgreen['button_bevel_color'] = '#577810';
-		$darkgreen['checklist_circle_color'] = '#9db668';
-		$darkgreen['counter_box_color'] = '#9db668';
-		$darkgreen['countdown_background_color'] = '#9db668';
-		$darkgreen['dropcap_color'] = '#9db668';
-		$darkgreen['flip_boxes_back_bg'] = '#9db668';
-		$darkgreen['progressbar_filled_color'] = '#9db668';
-		$darkgreen['counter_filled_color'] = '#9db668';
-		$darkgreen['ec_sidebar_widget_bg_color'] = '#9db668';
-		$darkgreen['menu_hover_first_color'] = '#9db668';
-		$darkgreen['header_top_bg_color'] = '#9db668';
-		$darkgreen['content_box_hover_animation_accent_color'] = '#9db668';
-		$darkgreen['map_overlay_color'] = '#9db668';
-		$darkgreen['flyout_menu_icon_hover_color'] = '#9db668';
+			'darkgreen' => array(
+				'#9db668',
+				'#a5c462',
+				'#cce890',
+				'#afd65a',
+				'#cce890',
+				'#AAD75B',
+				'#AAD75B',
+				'#cce890',
+				'#577810',
+				'#577810',
+				'#577810',
+			),
 
-		$orange = array();
-		$orange['primary_color'] = '#e9a825';
-		$orange['pricing_box_color'] = '#c4a362';
-		$orange['image_gradient_top_color'] = '#e8cb90';
-		$orange['image_gradient_bottom_color'] = '#d6ad5a';
-		$orange['button_gradient_top_color'] = '#e8cb90';
-		$orange['button_gradient_bottom_color'] = '#d6ad5a';
-		$orange['button_gradient_top_color_hover'] = '#d6ad5a';
-		$orange['button_gradient_bottom_color_hover'] = '#e8cb90';
-		$orange['button_accent_color'] = '#785510';
-		$orange['button_accent_hover_color'] = '#785510';
-		$orange['button_bevel_color'] = '#785510';
-		$orange['checklist_circle_color'] = '#e9a825';
-		$orange['counter_box_color'] = '#e9a825';
-		$orange['countdown_background_color'] = '#e9a825';
-		$orange['dropcap_color'] = '#e9a825';
-		$orange['flip_boxes_back_bg'] = '#e9a825';
-		$orange['progressbar_filled_color'] = '#e9a825';
-		$orange['counter_filled_color'] = '#e9a825';
-		$orange['ec_sidebar_widget_bg_color'] = '#e9a825';
-		$orange['menu_hover_first_color'] = '#e9a825';
-		$orange['header_top_bg_color'] = '#e9a825';
-		$orange['content_box_hover_animation_accent_color'] = '#e9a825';
-		$orange['map_overlay_color'] = '#e9a825';
-		$orange['flyout_menu_icon_hover_color'] = '#e9a825';
+			'orange' => array(
+				'#c4a362',
+				'#e8cb90',
+				'#d6ad5a',
+				'#e8cb90',
+				'#d6ad5a',
+				'#d6ad5a',
+				'#e8cb90',
+				'#785510',
+				'#785510',
+				'#785510',
+				'#e9a825',
+			),
 
-		$lightblue = array();
-		$lightblue['primary_color'] = '#67b7e1';
-		$lightblue['pricing_box_color'] = '#62a2c4';
-		$lightblue['image_gradient_top_color'] = '#90c9e8';
-		$lightblue['image_gradient_bottom_color'] = '#5aabd6';
-		$lightblue['button_gradient_top_color'] = '#90c9e8';
-		$lightblue['button_gradient_bottom_color'] = '#5aabd6';
-		$lightblue['button_gradient_top_color_hover'] = '#5aabd6';
-		$lightblue['button_gradient_bottom_color_hover'] = '#90c9e8';
-		$lightblue['button_accent_color'] = '#105378';
-		$lightblue['button_accent_hover_color'] = '#105378';
-		$lightblue['button_bevel_color'] = '#105378';
-		$lightblue['checklist_circle_color'] = '#67b7e1';
-		$lightblue['counter_box_color'] = '#67b7e1';
-		$lightblue['countdown_background_color'] = '#67b7e1';
-		$lightblue['dropcap_color'] = '#67b7e1';
-		$lightblue['flip_boxes_back_bg'] = '#67b7e1';
-		$lightblue['progressbar_filled_color'] = '#67b7e1';
-		$lightblue['counter_filled_color'] = '#67b7e1';
-		$lightblue['ec_sidebar_widget_bg_color'] = '#67b7e1';
-		$lightblue['menu_hover_first_color'] = '#67b7e1';
-		$lightblue['header_top_bg_color'] = '#67b7e1';
-		$lightblue['content_box_hover_animation_accent_color'] = '#67b7e1';
-		$lightblue['map_overlay_color'] = '#67b7e1';
-		$lightblue['flyout_menu_icon_hover_color'] = '#67b7e1';
+			'lightblue' => array(
+				'#62a2c4',
+				'#90c9e8',
+				'#5aabd6',
+				'#90c9e8',
+				'#5aabd6',
+				'#5aabd6',
+				'#90c9e8',
+				'#105378',
+				'#105378',
+				'#105378',
+				'#67b7e1',
+			),
 
-		$lightred = array();
-		$lightred['primary_color'] = '#f05858';
-		$lightred['pricing_box_color'] = '#c46262';
-		$lightred['image_gradient_top_color'] = '#e89090';
-		$lightred['image_gradient_bottom_color'] = '#d65a5a';
-		$lightred['button_gradient_top_color'] = '#e89090';
-		$lightred['button_gradient_bottom_color'] = '#d65a5a';
-		$lightred['button_gradient_top_color_hover'] = '#d65a5a';
-		$lightred['button_gradient_bottom_color_hover'] = '#e89090';
-		$lightred['button_accent_color'] = '#781010';
-		$lightred['button_accent_hover_color'] = '#781010';
-		$lightred['button_bevel_color'] = '#781010';
-		$lightred['checklist_circle_color'] = '#f05858';
-		$lightred['counter_box_color'] = '#f05858';
-		$lightred['countdown_background_color'] = '#f05858';
-		$lightred['dropcap_color'] = '#f05858';
-		$lightred['flip_boxes_back_bg'] = '#f05858';
-		$lightred['progressbar_filled_color'] = '#f05858';
-		$lightred['counter_filled_color'] = '#f05858';
-		$lightred['ec_sidebar_widget_bg_color'] = '#f05858';
-		$lightred['menu_hover_first_color'] = '#f05858';
-		$lightred['header_top_bg_color'] = '#f05858';
-		$lightred['content_box_hover_animation_accent_color'] = '#f05858';
-		$lightred['map_overlay_color'] = '#f05858';
-		$lightred['flyout_menu_icon_hover_color'] = '#f05858';
+			'lightred' => array(
+				'#c46262',
+				'#e89090',
+				'#d65a5a',
+				'#e89090',
+				'#d65a5a',
+				'#d65a5a',
+				'#e89090',
+				'#781010',
+				'#781010',
+				'#781010',
+				'#f05858',
+			),
 
-		$pink = array();
-		$pink['primary_color'] = '#e67fb9';
-		$pink['pricing_box_color'] = '#c46299';
-		$pink['image_gradient_top_color'] = '#e890c2';
-		$pink['image_gradient_bottom_color'] = '#d65aa0';
-		$pink['button_gradient_top_color'] = '#e890c2';
-		$pink['button_gradient_bottom_color'] = '#d65aa0';
-		$pink['button_gradient_top_color_hover'] = '#d65aa0';
-		$pink['button_gradient_bottom_color_hover'] = '#e890c2';
-		$pink['button_accent_color'] = '#78104b';
-		$pink['button_accent_hover_color'] = '#78104b';
-		$pink['button_bevel_color'] = '#78104b';
-		$pink['checklist_circle_color'] = '#e67fb9';
-		$pink['counter_box_color'] = '#e67fb9';
-		$pink['countdown_background_color'] = '#e67fb9';
-		$pink['dropcap_color'] = '#e67fb9';
-		$pink['flip_boxes_back_bg'] = '#e67fb9';
-		$pink['progressbar_filled_color'] = '#e67fb9';
-		$pink['counter_filled_color'] = '#e67fb9';
-		$pink['ec_sidebar_widget_bg_color'] = '#e67fb9';
-		$pink['menu_hover_first_color'] = '#e67fb9';
-		$pink['header_top_bg_color'] = '#e67fb9';
-		$pink['content_box_hover_animation_accent_color'] = '#e67fb9';
-		$pink['map_overlay_color'] = '#e67fb9';
-		$pink['flyout_menu_icon_hover_color'] = '#e67fb9';
+			'pink' => array(
+				'#c46299',
+				'#e890c2',
+				'#d65aa0',
+				'#e890c2',
+				'#d65aa0',
+				'#d65aa0',
+				'#e890c2',
+				'#78104b',
+				'#78104b',
+				'#78104b',
+				'#e67fb9',
+			),
 
-		$lightgrey = array();
-		$lightgrey['primary_color'] = '#9e9e9e';
-		$lightgrey['pricing_box_color'] = '#c4c4c4';
-		$lightgrey['image_gradient_top_color'] = '#e8e8e8';
-		$lightgrey['image_gradient_bottom_color'] = '#d6d6d6';
-		$lightgrey['button_gradient_top_color'] = '#e8e8e8';
-		$lightgrey['button_gradient_bottom_color'] = '#d6d6d6';
-		$lightgrey['button_gradient_top_color_hover'] = '#d6d6d6';
-		$lightgrey['button_gradient_bottom_color_hover'] = '#e8e8e8';
-		$lightgrey['button_accent_color'] = '#787878';
-		$lightgrey['button_accent_hover_color'] = '#787878';
-		$lightgrey['button_bevel_color'] = '#787878';
-		$lightgrey['checklist_circle_color'] = '#9e9e9e';
-		$lightgrey['counter_box_color'] = '#9e9e9e';
-		$lightgrey['countdown_background_color'] = '#9e9e9e';
-		$lightgrey['dropcap_color'] = '#9e9e9e';
-		$lightgrey['flip_boxes_back_bg'] = '#9e9e9e';
-		$lightgrey['progressbar_filled_color'] = '#9e9e9e';
-		$lightgrey['counter_filled_color'] = '#9e9e9e';
-		$lightgrey['ec_sidebar_widget_bg_color'] = '#9e9e9e';
-		$lightgrey['menu_hover_first_color'] = '#9e9e9e';
-		$lightgrey['header_top_bg_color'] = '#9e9e9e';
-		$lightgrey['content_box_hover_animation_accent_color'] = '#9e9e9e';
-		$lightgrey['map_overlay_color'] = '#9e9e9e';
-		$lightgrey['flyout_menu_icon_hover_color'] = '#9e9e9e';
+			'lightgrey' => array(
+				'#c4c4c4',
+				'#e8e8e8',
+				'#d6d6d6',
+				'#e8e8e8',
+				'#d6d6d6',
+				'#d6d6d6',
+				'#e8e8e8',
+				'#787878',
+				'#787878',
+				'#787878',
+				'#9e9e9e',
+			),
 
-		$brown = array();
-		$brown['primary_color'] = '#ab8b65';
-		$brown['pricing_box_color'] = '#c49862';
-		$brown['image_gradient_top_color'] = '#e8c090';
-		$brown['image_gradient_bottom_color'] = '#d69e5a';
-		$brown['button_gradient_top_color'] = '#e8c090';
-		$brown['button_gradient_bottom_color'] = '#d69e5a';
-		$brown['button_gradient_top_color_hover'] = '#d69e5a';
-		$brown['button_gradient_bottom_color_hover'] = '#e8c090';
-		$brown['button_accent_color'] = '#784910';
-		$brown['button_accent_hover_color'] = '#784910';
-		$brown['button_bevel_color'] = '#784910';
-		$brown['checklist_circle_color'] = '#ab8b65';
-		$brown['counter_box_color'] = '#ab8b65';
-		$brown['countdown_background_color'] = '#ab8b65';
-		$brown['dropcap_color'] = '#ab8b65';
-		$brown['flip_boxes_back_bg'] = '#ab8b65';
-		$brown['progressbar_filled_color'] = '#ab8b65';
-		$brown['ec_sidebar_widget_bg_color'] = '#ab8b65';
-		$brown['menu_hover_first_color'] = '#ab8b65';
-		$brown['header_top_bg_color'] = '#ab8b65';
-		$brown['content_box_hover_animation_accent_color'] = '#ab8b65';
-		$brown['map_overlay_color'] = '#ab8b65';
-		$brown['flyout_menu_icon_hover_color'] = '#ab8b65';
+			'brown' => array(
+				'#e8c090',
+				'#d69e5a',
+				'#e8c090',
+				'#d69e5a',
+				'#d69e5a',
+				'#e8c090',
+				'#784910',
+				'#784910',
+				'#784910',
+				'#ab8b65',
+			),
 
-		$red = array();
-		$red['primary_color'] = '#e10707';
-		$red['pricing_box_color'] = '#c40606';
-		$red['image_gradient_top_color'] = '#e80707';
-		$red['image_gradient_bottom_color'] = '#d60707';
-		$red['button_gradient_top_color'] = '#e80707';
-		$red['button_gradient_bottom_color'] = '#d60707';
-		$red['button_gradient_top_color_hover'] = '#d60707';
-		$red['button_gradient_bottom_color_hover'] = '#e80707';
-		$red['button_accent_color'] = '#780404';
-		$red['button_accent_hover_color'] = '#780404';
-		$red['button_bevel_color'] = '#780404';
-		$red['checklist_circle_color'] = '#e10707';
-		$red['counter_box_color'] = '#e10707';
-		$red['countdown_background_color'] = '#e10707';
-		$red['dropcap_color'] = '#e10707';
-		$red['flip_boxes_back_bg'] = '#e10707';
-		$red['progressbar_filled_color'] = '#e10707';
-		$red['counter_filled_color'] = '#e10707';
-		$red['ec_sidebar_widget_bg_color'] = '#e10707';
-		$red['menu_hover_first_color'] = '#e10707';
-		$red['header_top_bg_color'] = '#e10707';
-		$red['content_box_hover_animation_accent_color'] = '#e10707';
-		$red['map_overlay_color'] = '#e10707';
-		$red['flyout_menu_icon_hover_color'] = '#e10707';
+			'red' => array(
+				'#c40606',
+				'#e80707',
+				'#d60707',
+				'#e80707',
+				'#d60707',
+				'#d60707',
+				'#e80707',
+				'#780404',
+				'#780404',
+				'#780404',
+				'#e10707',
+			),
 
-		$blue = array();
-		$blue['primary_color'] = '#1a80b6';
-		$blue['pricing_box_color'] = '#62a2c4';
-		$blue['image_gradient_top_color'] = '#90c9e8';
-		$blue['image_gradient_bottom_color'] = '#5aabd6';
-		$blue['button_gradient_top_color'] = '#90c9e8';
-		$blue['button_gradient_bottom_color'] = '#5aabd6';
-		$blue['button_gradient_top_color_hover'] = '#5aabd6';
-		$blue['button_gradient_bottom_color_hover'] = '#90c9e8';
-		$blue['button_accent_color'] = '#105378';
-		$blue['button_accent_hover_color'] = '#105378';
-		$blue['button_bevel_color'] = '#105378';
-		$blue['checklist_circle_color'] = '#1a80b6';
-		$blue['counter_box_color'] = '#1a80b6';
-		$blue['countdown_background_color'] = '#1a80b6';
-		$blue['dropcap_color'] = '#1a80b6';
-		$blue['flip_boxes_back_bg'] = '#1a80b6';
-		$blue['progressbar_filled_color'] = '#1a80b6';
-		$blue['counter_filled_color'] = '#1a80b6';
-		$blue['ec_sidebar_widget_bg_color'] = '#1a80b6';
-		$blue['menu_hover_first_color'] = '#1a80b6';
-		$blue['header_top_bg_color'] = '#1a80b6';
-		$blue['content_box_hover_animation_accent_color'] = '#1a80b6';
-		$blue['map_overlay_color'] = '#1a80b6';
-		$blue['flyout_menu_icon_hover_color'] = '#1a80b6';
+			'blue' => array(
+				'#62a2c4',
+				'#90c9e8',
+				'#5aabd6',
+				'#90c9e8',
+				'#5aabd6',
+				'#5aabd6',
+				'#90c9e8',
+				'#105378',
+				'#105378',
+				'#105378',
+				'#1a80b6',
+			),
+		);
+
+		$options = array(
+			'pricing_box_color',
+			'image_gradient_top_color',
+			'image_gradient_bottom_color',
+			'button_gradient_top_color',
+			'button_gradient_bottom_color',
+			'button_gradient_top_color_hover',
+			'button_gradient_bottom_color_hover',
+			'button_accent_color',
+			'button_accent_hover_color',
+			'button_bevel_color',
+			'primary_color',
+			'checklist_circle_color',
+			'counter_box_color',
+			'countdown_background_color',
+			'dropcap_color',
+			'flip_boxes_back_bg',
+			'progressbar_filled_color',
+			'counter_filled_color',
+			'ec_sidebar_widget_bg_color',
+			'menu_hover_first_color',
+			'header_top_bg_color',
+			'content_box_hover_animation_accent_color',
+			'map_overlay_color',
+			'flyout_menu_icon_hover_color',
+			'menu_highlight_background',
+			'menu_icon_hover_color',
+			'logo_background_color',
+			'slidingbar_link_color_hover',
+			'footer_link_color_hover',
+			'copyright_link_color_hover',
+			'privacy_bar_link_hover_color',
+			'faq_accordian_active_color',
+			'accordian_active_color',
+		);
+
+		foreach ( $colors as $color => $values ) {
+			$$color = array();
+			foreach ( $options as $key => $option ) {
+				if ( isset( $values[ $key ] ) ) {
+					${$color}[ $option ] = $values[ $key ];
+				} else {
+					// If $key is not set, this value needs to fallback to the primary color which is the last item in the array.
+					${$color}[ $option ] = $values[ count( $values ) - 1 ];
+				}
+			}
+		}
 
 		if ( isset( $$context ) ) {
 			return $$context;

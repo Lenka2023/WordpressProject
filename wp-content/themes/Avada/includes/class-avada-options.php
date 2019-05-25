@@ -86,7 +86,7 @@ class Avada_Options {
 			'elastic_slider',
 			'lightbox',
 			'contact',
-			'search_page',
+			'search',
 			'privacy',
 			'extra',
 			'advanced',

@@ -7,6 +7,141 @@ This is why we highly recommend to stay up to date with each new theme version a
 
 
 -----------------------------------------------------------------------------------------
+Version 5.9.1 - May 1st, 2019
+-----------------------------------------------------------------------------------------
+
+
+- NEW: Added an option so that mega-menu can be set to either custom width, site-width or full screen width
+- NEW: Added an option to set the border width for paginations
+- NEW: Added an option to decide if search page results should be limited to specific post types or not
+- NEW: Added a filter for changing post types that should be included in search
+- NEW: Added a filter for changing the page title bar contents
+- NEW: Added a filter for plugin info for Fusion Builder add-on authors
+- IMPROVEMENT: ToTop script can be used on mobile now independently from desktop
+- IMPROVEMENT: Video autoplay is now allowed in lightbox videos when set via URL parameter
+- IMPROVEMENT: AJAX live search will now allow return key presses to directly go to results page
+- IMPROVEMENT: Notice about missing contact form email address only displaying for admins now
+- IMPROVEMENT: Updated several option descriptions and dependencies for better usability
+- IMPROVEMENT: Added theme support for Gutenberg default front-end stylings
+- IMPROVEMENT: Setup for custom icons in content boxes is now easier to use
+- IMPROVEMENT: Additional attributes for button element now work with and without quotation marks
+- UPDATED: Font Awesome now is on version 5.8.1 offering 1513 icons
+- FIXED: Menu highlight labels vertically not being perfectly aligned
+- FIXED: Underline highlight style being incorrectly applied to menu buttons
+- FIXED: Ubermenu not displaying on mobile
+- FIXED: Pagination missing from search page
+- FIXED: Pre-defined color schemes not replacing all Theme Option colors
+- FIXED: Menu drop-down indicator not fully centered when icons are used in top/bottom position
+- FIXED: Mobile menu sub-menu indicator showing even if turned off on right text layout
+- FIXED: WP core bug in color pickers that could lead to issues within the Avada menu options
+- FIXED: Some new search Theme Options can't be changed
+- FIXED: Terms of CPT not being displayed in search results
+- FIXED: Some post types names not using the correct name on AJAX live search suggestions
+- FIXED: Google maps using old event name for centering markers
+- FIXED: WooCommerce gallery zoom not correctly working when image lazy loading is used
+- FIXED: WooCommerce menu cart icon counter not live updating on header layout 6
+- FIXED: Display issue in WooCommerce product gallery and tabs on iPad portrait
+- FIXED: Updated deprecated WooCommerce cart hash filter name
+- FIXED: Social sharing box not displaying when using single events block editor
+- FIXED: Comments template showing name and email as required eveen if turned of in WP Settings
+- FIXED: Corrected issues in the Events filter bar design for latest plugin version
+- FIXED: Events archive list display issue on mobile when CSS compiler is off and async media queries are on
+- FIXED: Small display issue on Events month template in the single day view
+- FIXED: Portfolio filters on mobile not inheriting border color from Theme Options
+- FIXED: Column lift-up effect being partially hidden if neighboring column uses same effect and spacing is too small
+- FIXED: Sticky sidebar being tied to Content Breakpoint instead of Sidebar Breakpoint
+- FIXED: Incorrect spacing between gallery images when using image lazyload
+- FIXED: Flip boxes equal heights not working inside of tabs/toggles/modals
+- FIXED: Avada's select styling not working for Gravity Forms inside of tabs/toggles/modals
+- FIXED: Triangle section separator not working
+- FIXED: Tabs without content breaking the tabs changing functionality
+- FIXED: WPML translation flags being oversized in the Fusion Builder library
+- FIXED: Animations not correctly triggered, after page height change due to portfolio element filter change
+- FIXED: Background videos in containers not covering container fully in IE11
+- FIXED: Flyout menu icons on mobile not being correctly aligned in IE11
+- FIXED: Side header menu items incorrectly aligned on IE11
+
+
+-----------------------------------------------------------------------------------------
+Version 5.9 - March 26th, 2019
+-----------------------------------------------------------------------------------------
+
+
+- NEW: 2 New Professionally Designed Demos
+- NEW: Added a main menu underline highlight style
+- NEW: Added an animation style option for drop-down and mega menus
+- NEW: Added AJAX live search functionality with several options
+- NEW: Vastly extended the Theme Options for the search page
+- NEW: Added a border radius option to columns and nested columns
+- NEW: Box shadow options are now available for columns and nested columns
+- NEW: Vastly extended options for flip boxes: a new flip effect, flip direction, flip duration and background images
+- NEW: Added equal height option to flip boxes
+- NEW: Added 5 new section separator stylings
+- NEW: Added more styling options for all paginations
+- NEW: Added several styling options for the toTop button
+- NEW: Mobile margin option is now available for Title element
+- NEW: Global element shortcodes are copy/paste ready available now in the Fusion Builder element library
+- NEW: Border position and link target options are added to nested columns
+- NEW: Added an option to disable the drop shadow on sticky header
+- NEW: Full compatibility with WooCommerce 3.5.7
+- IMPROVEMENT: Updated the additional attributes option for buttons to allow Google conversion tracking
+- IMPROVEMENT: Post slider now allows the selection of multiple categories
+- IMPROVEMENT: Now the set Avada mobile menu can be displayed when using uberMenu when it is disabled on mobile
+- IMPROVEMENT: Added the ability to disable Fusion Builder single demo pages import through remove_theme_support
+- IMPROVEMENT: Updated several option descriptions and dependencies for better usability
+- IMPROVEMENT: Added sub-menu title to ARIA label for mobile sub-menu toggles
+- FIXED: Color pickers not being able to correctly select colors in the corners of the color pane
+- FIXED: Container parallax image with direction removes overlay color
+- FIXED: Section separators having wrong width when container left/right padding is set to 0 without unit
+- FIXED: Font sizes given in em not working correctly in checklist element
+- FIXED: Back-end "add Columns" button not opening correct column modal when starting on a blank page
+- FIXED: Lift up animation on image carousel when using border not being smooth
+- FIXED: Background color for Events element being added to the wrong selector
+- FIXED: Isotope positioning and general grid box positioning for Events element
+- FIXED: Default heading margins being incorrect on mobiles for Title element
+- FIXED: Google maps not loading language specific maps when using embed or static API
+- FIXED: Google maps localization not being correct for languages which support different modes
+- FIXED: Google maps centering sometimes causing wrong zoom level on first page load
+- FIXED: Google map on contact form not loading when using embed API when no address is entered for JS API
+- FIXED: Fusion Builder demo pages being loaded on post types where Fusion Builder is not enabled
+- FIXED: WooCommerce Apple-Pay Button missing on products pages
+- FIXED: WooCommerce variation images being wrong when there are more than 30 variations
+- FIXED: WooCommerce comments pagination being incorrectly aligned
+- FIXED: WooCommerce Composite Products missing the +/- quantity buttons
+- FIXED: WooCommerce add-to-cart spinner being on all related products if just one was added to cart
+- FIXED: Carousel elements not working correctly inside WooCommerce product tabs
+- FIXED: Page Title Bar custom settings not working on WooCommerce shop page
+- FIXED: Issues on RTL sites when using sub-menu indicators and main menu icons
+- FIXED: Flyout menu search icon being misaligned on RTL sites
+- FIXED: Incorrect spacing between portfolio items for certain setups when using image lazy load
+- FIXED: Image rollovers sometimes leaving 1px of the image uncovered
+- FIXED: Automatic memory adjustment not working in all cases in the Avada migration class
+- FIXED: Help menu checklist margins being incorrectly assigned on 404 and search page
+- FIXED: Menu padding for last item being incorrect on Flyout menu when page gets scrolled
+- FIXED: Image lazy loading exclusion for old versions of LayerSlider
+- FIXED: PHP notice in Google map of the contact form template
+- FIXED: PHP notice about incorrect variable data type in content box element
+- FIXED: YouTube video in Fusion Slider not auto-playing in all cases
+- FIXED: CSS ID option not working for the Fusion Slider element
+- FIXED: Alignment issues in content boxes with timeline vertical layout right alignment and RTL
+- FIXED: Flyout menu icons on mobile not staying visible when menu is opened and if sticky header is disabled
+- FIXED: Max-width setting on Image element not working in IE when viewport is smaller than max-width
+- FIXED: Columns equal heights mobile breakpoint being off 1px
+- FIXED: Anchor scrolling script calcing position more often than needed
+- FIXED: PHP fatal error if Fusion Builder was activated prior to Avada
+
+
+-----------------------------------------------------------------------------------------
+Version 5.8.2 - February 21st, 2019
+-----------------------------------------------------------------------------------------
+
+
+- FIXED: Security fix to prevent possible XSS attacks in bootstrap JS libraries
+- FIXED: Columns containing only background image having no height in IE/Edge
+- FIXED: Translation of library elements using WPML not working
+
+
+-----------------------------------------------------------------------------------------
 Version 5.8.1 - February 07th, 2019
 -----------------------------------------------------------------------------------------
 
@@ -32,7 +167,7 @@ Version 5.8.1 - February 07th, 2019
 - FIXED: Image lazy loading causing issues in LayerSlider and Slider Revolution
 - FIXED: Events Calendar title bar not showing in some cases when using events shortcode
 - FIXED: Lightbox auto play mode being initialized even if there is only one image
-- FIXED: Image carousel element sharing ightbox gallery ID with gallery element
+- FIXED: Image carousel element sharing Lightbox gallery ID with gallery element
 - FIXED: Image in a one column image carousel spanning to full available width
 - FIXED: Added 2 missing WP core filters to our nav walker class
 - FIXED: Link target attribute incorrectly added to related posts title link

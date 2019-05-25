@@ -80,13 +80,15 @@ function avada_options_section_menu( $sections ) {
 					),
 					'menu_highlight_style'               => array(
 						'label'       => esc_html__( 'Main Menu Highlight Style', 'Avada' ),
-						'description' => __( 'Controls the highlight style for main menu links and also affects the look of menu dropdowns. Arrow style cannot work with a transparent header background. <strong>Important:</strong> Arrow & Background style can require configuration of other options depending on desired effect.', 'Avada' ) . ' <a href="https://theme-fusion.com/documentation/avada/main-menu-highlight-styles/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'See this post for more information', 'Avada' ) . '</a>.',
+						'description' => __( 'Controls the highlight style for main menu links and also affects the look of menu dropdowns. Arrow style cannot work with a transparent header background. Bar highlights will display vertically on side header layouts. <strong>IMPORTANT:</strong> Arrow & Background style can require configuration of other options depending on desired effect.', 'Avada' ) . ' <a href="https://theme-fusion.com/documentation/avada/main-menu-highlight-styles/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'See this post for more information', 'Avada' ) . '</a>.',
 						'id'          => 'menu_highlight_style',
 						'default'     => 'bar',
 						'choices'     => array(
-							'bar'        => esc_html__( 'Bar', 'Avada' ),
+							'bar'        => esc_html__( 'Top Bar', 'Avada' ),
+							'bottombar'  => esc_html__( 'Bottom Bar', 'Avada' ),
 							'arrow'      => esc_html__( 'Arrow', 'Avada' ),
 							'background' => esc_html__( 'Background', 'Avada' ),
+							'textcolor'  => esc_html__( 'Color Only', 'Avada' ),
 						),
 						'type'        => 'radio-buttonset',
 						'class'       => 'fusion-or-gutter',
@@ -178,7 +180,7 @@ function avada_options_section_menu( $sections ) {
 							'max'  => '40',
 							'step' => '1',
 						),
-						'class'       => 'fusion-gutter-and-or-and',
+						'class'       => 'fusion-gutter-and-or-and-or-and-or-and',
 						'required'    => array(
 							array(
 								'setting'  => 'menu_highlight_style',
@@ -194,6 +196,26 @@ function avada_options_section_menu( $sections ) {
 								'setting'  => 'menu_highlight_style',
 								'operator' => '==',
 								'value'    => 'bar',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'bottombar',
+							),
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'bottombar',
 							),
 							array(
 								'setting'  => 'header_layout',
@@ -265,6 +287,30 @@ function avada_options_section_menu( $sections ) {
 							),
 						),
 					),
+					'main_menu_sub_menu_animation'               => array(
+						'label'       => esc_html__( 'Main Menu Dropdown / Mega Menu Animation', 'Avada' ),
+						'description' => esc_html__( 'Controls the animation type for all sub-menus.', 'Avada' ),
+						'id'          => 'main_menu_sub_menu_animation',
+						'type'        => 'radio-buttonset',
+						'default'     => 'fade',
+						'choices'     => array(
+							'fade'  => esc_html__( 'Fade', 'Avada' ),
+							'slide' => esc_html__( 'Slide', 'Avada' ),
+						),
+						'class'       => 'fusion-or-gutter',
+						'required'    => array(
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+						),
+					),
 					'dropdown_menu_top_border_size'      => array(
 						'label'       => esc_html__( 'Main Menu Dropdown Top Border Size', 'Avada' ),
 						'description' => esc_html__( 'Controls top border size of dropdown menus and mega menus.', 'Avada' ),
@@ -276,7 +322,7 @@ function avada_options_section_menu( $sections ) {
 							'max'  => '50',
 							'step' => '1',
 						),
-						'class'       => 'fusion-gutter-and-or-and',
+						'class'       => 'fusion-gutter-and-or-and-or-and-or-and',
 						'required'    => array(
 							array(
 								'setting'  => 'menu_highlight_style',
@@ -292,6 +338,26 @@ function avada_options_section_menu( $sections ) {
 								'setting'  => 'menu_highlight_style',
 								'operator' => '==',
 								'value'    => 'bar',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'bottombar',
+							),
+							array(
+								'setting'  => 'header_position',
+								'operator' => '!=',
+								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'menu_highlight_style',
+								'operator' => '==',
+								'value'    => 'bottombar',
 							),
 							array(
 								'setting'  => 'header_layout',
@@ -1877,6 +1943,30 @@ function avada_options_section_menu( $sections ) {
 							),
 						),
 					),
+					'megamenu_width'         => array(
+						'label'       => esc_html__( 'Mega Menu Max-Width', 'Avada' ),
+						'description' => esc_html__( 'Controls the max width of the mega menu. On boxed side header layouts, "Viewport Width" will match "Site Width".', 'Avada' ),
+						'id'          => 'megamenu_width',
+						'type'        => 'radio-buttonset',
+						'default'     => 'site_width',
+						'choices'     => array(
+							'site_width'     => esc_html__( 'Site Width', 'Avada' ),
+							'viewport_width' => esc_html__( '100% Width', 'Avada' ),
+							'custom_width'   => esc_html__( 'Custom Width', 'Avada' ),
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+							array(
+								'setting'  => 'disable_megamenu',
+								'operator' => '=',
+								'value'    => '1',
+							),
+						),
+					),
 					'megamenu_max_width'             => array(
 						'label'       => esc_html__( 'Mega Menu Max-Width', 'Avada' ),
 						'description' => esc_html__( 'Controls the max width of the mega menu.', 'Avada' ),
@@ -1898,6 +1988,44 @@ function avada_options_section_menu( $sections ) {
 								'setting'  => 'disable_megamenu',
 								'operator' => '=',
 								'value'    => '1',
+							),
+							array(
+								'setting'  => 'megamenu_width',
+								'operator' => '=',
+								'value'    => 'custom_width',
+							),
+						),
+					),
+					'megamenu_interior_content_width'             => array(
+						'label'       => esc_html__( 'Mega Menu Interior Content Width', 'Avada' ),
+						'description' => esc_html__( 'For full width mega menus select if the interior menu content is contained to site width or 100% width.', 'Avada' ),
+						'id'          => 'megamenu_interior_content_width',
+						'type'        => 'radio-buttonset',
+						'default'     => 'viewport_width',
+						'choices'     => array(
+							'site_width'     => esc_html__( 'Site Width', 'Avada' ),
+							'viewport_width' => esc_html__( '100% Width', 'Avada' ),
+						),
+						'required'    => array(
+							array(
+								'setting'  => 'header_position',
+								'operator' => '=',
+								'value'    => 'Top',
+							),
+							array(
+								'setting'  => 'header_layout',
+								'operator' => '!=',
+								'value'    => 'v6',
+							),
+							array(
+								'setting'  => 'disable_megamenu',
+								'operator' => '=',
+								'value'    => '1',
+							),
+							array(
+								'setting'  => 'megamenu_width',
+								'operator' => '=',
+								'value'    => 'viewport_width',
 							),
 						),
 					),
@@ -2012,7 +2140,7 @@ function avada_options_section_menu( $sections ) {
 						'label'       => esc_html__( 'Main Menu Icon Hover Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the hover color of the top-level main menu icons.', 'Avada' ),
 						'id'          => 'menu_icon_hover_color',
-						'default'     => ( isset( $settings['primary_color'] ) && ! empty( $settings['primary_color'] ) ) ? $settings['primary_color'] : '#a0ce4e',
+						'default'     => '#a0ce4e',
 						'type'        => 'color-alpha',
 					),
 					'menu_thumbnail_size'   => array(

@@ -18,11 +18,11 @@ do_action( 'avada_before_comments' );
  * the visitor has not yet entered the password we will
  * return early without loading the comments.
  */
-?>
 
-<?php if ( post_password_required() ) : ?>
-	<?php return; ?>
-<?php endif; ?>
+if ( post_password_required() ) {
+	return;
+}
+?>
 
 <?php $title_size = ( false === avada_is_page_title_bar_enabled( get_the_ID() ) ? '2' : '3' ); ?>
 <?php if ( have_comments() ) : ?>
@@ -32,17 +32,26 @@ do_action( 'avada_before_comments' );
 		<?php comments_number( esc_html__( 'No Comments', 'Avada' ), esc_html__( 'One Comment', 'Avada' ), esc_html( _n( '% Comment', '% Comments', get_comments_number(), 'Avada' ) ) ); ?>
 		<?php Avada()->template->title_template( ob_get_clean(), $title_size ); ?>
 
-		<?php if ( function_exists( 'the_comments_navigation' ) ) : ?>
-			<?php the_comments_navigation(); ?>
-		<?php endif; ?>
-
 		<ol class="comment-list commentlist">
 			<?php wp_list_comments( 'callback=avada_comment' ); ?>
 		</ol><!-- .comment-list -->
 
-		<?php if ( function_exists( 'the_comments_navigation' ) ) : ?>
-			<?php the_comments_navigation(); ?>
-		<?php endif; ?>
+		<?php
+		if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) {
+			echo '<nav class="fusion-pagination">';
+			paginate_comments_links(
+				apply_filters(
+					'fusion_comment_pagination_args',
+					array(
+						'prev_text' => '<span class="page-prev"></span><span class="page-text">' . esc_attr__( 'Previous', 'Avada' ) . '</span>',
+						'next_text' => '<span class="page-text">' . esc_attr__( 'Next', 'Avada' ) . '</span><span class="page-next"></span>',
+						'type'      => 'plain',
+					)
+				)
+			);
+			echo '</nav>';
+		}
+		?>
 	</div>
 
 <?php endif; ?>
@@ -57,13 +66,15 @@ do_action( 'avada_before_comments' );
 	$req       = get_option( 'require_name_email' );
 	$aria_req  = ( $req ) ? " aria-required='true'" : '';
 	$html_req  = ( $req ) ? " required='required'" : '';
+	$name      = ( $req ) ? __( 'Name (required)', 'Avada' ) : __( 'Name', 'Avada' );
+	$email     = ( $req ) ? __( 'Email (required)', 'Avada' ) : __( 'Email', 'Avada' );
 	$html5     = ( 'html5' === current_theme_supports( 'html5', 'comment-form' ) ) ? 'html5' : 'xhtml';
 	$consent   = empty( $commenter['comment_author_email'] ) ? '' : ' checked="checked"';
 
 	$fields = array();
 
-	$fields['author']  = '<div id="comment-input"><input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" placeholder="' . esc_html__( 'Name (required)', 'Avada' ) . '" size="30"' . $aria_req . $html_req . ' aria-label="' . esc_attr__( 'Name', 'Avada' ) . '"/>';
-	$fields['email']   = '<input id="email" name="email" ' . ( $html5 ? 'type="email"' : 'type="text"' ) . ' value="' . esc_attr( $commenter['comment_author_email'] ) . '" placeholder="' . esc_html__( 'Email (required)', 'Avada' ) . '" size="30" ' . $aria_req . $html_req . ' aria-label="' . esc_attr__( 'Email', 'Avada' ) . '"/>';
+	$fields['author']  = '<div id="comment-input"><input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" placeholder="' . esc_attr( $name ) . '" size="30"' . $aria_req . $html_req . ' aria-label="' . esc_attr( $name ) . '"/>';
+	$fields['email']   = '<input id="email" name="email" ' . ( $html5 ? 'type="email"' : 'type="text"' ) . ' value="' . esc_attr( $commenter['comment_author_email'] ) . '" placeholder="' . esc_attr( $email )  . '" size="30" ' . $aria_req . $html_req . ' aria-label="' . esc_attr( $email ) . '"/>';
 	$fields['url']     = '<input id="url" name="url" ' . ( $html5 ? 'type="url"' : 'type="text"' ) . ' value="' . esc_attr( $commenter['comment_author_url'] ) . '" placeholder="' . esc_html__( 'Website', 'Avada' ) . '" size="30" aria-label="' . esc_attr__( 'URL', 'Avada' ) . '" /></div>';
 	$fields['cookies'] = '<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' /><label for="wp-comment-cookies-consent">' . esc_html__( 'Save my name, email, and website in this browser for the next time I comment.', 'Avada' ) . '</label></p>';
 

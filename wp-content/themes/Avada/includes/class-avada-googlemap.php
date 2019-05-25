@@ -173,7 +173,7 @@ class Avada_GoogleMap {
 				if ( 0 === $color_obj->alpha ) {
 					$overlay_color = '';
 				} elseif ( 1 > $color_obj->alpha ) {
-					$lighter       = $color_obj->get_new( 'lightness', $color->lightness + absint( 100 * ( 1 - $color_obj->alpha ) ) );
+					$lighter       = $color_obj->get_new( 'lightness', $color_obj->lightness + absint( 100 * ( 1 - $color_obj->alpha ) ) );
 					$overlay_color = $lighter->to_css( 'hex' );
 				}
 			}
@@ -319,8 +319,9 @@ class Avada_GoogleMap {
 		$html          = '';
 		$api_key       = apply_filters( 'fusion_google_maps_api_key', Avada()->settings->get( 'gmap_api' ) );
 		$embed_address = str_replace( ' ', '+', self::$args['embed_address'] );
+		$lang_code     = fusion_get_google_maps_language_code();
 
-		$html .= '<iframe width="' . self::$args['width'] . '" height="' . self::$args['height'] . '" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=' . $api_key . '&q=' . $embed_address . '&maptype=' . self::$args['embed_map_type'] . '&zoom=' . self::$args['zoom'] . '" allowfullscreen></iframe>';
+		$html .= '<iframe width="' . self::$args['width'] . '" height="' . self::$args['height'] . '" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=' . $api_key . '&language=' . $lang_code . '&q=' . $embed_address . '&maptype=' . self::$args['embed_map_type'] . '&zoom=' . self::$args['zoom'] . '" allowfullscreen></iframe>';
 
 		$html = '<div ' . $this->attributes( 'avada-google-map' ) . '>' . $html . '</div>';
 
@@ -459,7 +460,9 @@ class Avada_GoogleMap {
 			echo '<script type="text/javascript">var RecaptchaOptions = { theme : \'' . esc_attr( Avada()->settings->get( 'recaptcha_color_scheme' ) ) . '\' };</script>';
 		}
 
-		if ( is_page_template( 'contact.php' ) && Avada()->settings->get( 'gmap_address' ) && Avada()->settings->get( 'status_gmap' ) ) {
+		$is_address_set = ( 'js' === Avada()->settings->get( 'gmap_api_type' ) && Avada()->settings->get( 'gmap_address' ) ) || ( 'embed' === Avada()->settings->get( 'gmap_api_type' ) && Avada()->settings->get( 'gmap_embed_address' ) );
+
+		if ( is_page_template( 'contact.php' ) && Avada()->settings->get( 'status_gmap' ) && $is_address_set ) {
 
 			$map_args = array(
 				'api_type'                 => esc_html( Avada()->settings->get( 'gmap_api_type' ) ),

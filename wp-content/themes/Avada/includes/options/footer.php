@@ -660,7 +660,7 @@ function avada_options_section_footer( $sections ) {
 						'label'       => esc_html__( 'Footer Link Hover Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the text hover color of the footer link font.', 'Avada' ),
 						'id'          => 'footer_link_color_hover',
-						'default'     => ( isset( $settings['primary_color'] ) && ! empty( $settings['primary_color'] ) ) ? $settings['primary_color'] : '#ffffff',
+						'default'     => '#ffffff',
 						'type'        => 'color-alpha',
 						'class'       => 'fusion-or-gutter',
 						'required'    => array(
@@ -680,7 +680,7 @@ function avada_options_section_footer( $sections ) {
 						'label'       => esc_html__( 'Copyright Text Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the text color of the footer copyright area.', 'Avada' ),
 						'id'          => 'copyright_text_color',
-						'default'     => ( isset( $settings['footer_text_color'] ) && ! empty( $settings['footer_text_color'] ) ) ? $settings['footer_text_color'] : '#ffffff',
+						'default'     => '#ffffff',
 						'type'        => 'color-alpha',
 						'required'    => array(
 							array(
@@ -694,7 +694,7 @@ function avada_options_section_footer( $sections ) {
 						'label'       => esc_html__( 'Copyright Link Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the link color of the footer copyright area.', 'Avada' ),
 						'id'          => 'copyright_link_color',
-						'default'     => ( isset( $settings['footer_link_color'] ) && ! empty( $settings['footer_link_color'] ) ) ? $settings['footer_link_color'] : '#ffffff',
+						'default'     => '#ffffff',
 						'type'        => 'color-alpha',
 						'required'    => array(
 							array(
@@ -708,7 +708,7 @@ function avada_options_section_footer( $sections ) {
 						'label'       => esc_html__( 'Copyright Link Hover Color', 'Avada' ),
 						'description' => esc_html__( 'Controls the link hover color of the footer copyright area.', 'Avada' ),
 						'id'          => 'copyright_link_color_hover',
-						'default'     => ( isset( $settings['footer_link_color_hover'] ) && ! empty( $settings['footer_link_color_hover'] ) ) ? $settings['footer_link_color_hover'] : '#ffffff',
+						'default'     => '#ffffff',
 						'type'        => 'color-alpha',
 						'required'    => array(
 							array(

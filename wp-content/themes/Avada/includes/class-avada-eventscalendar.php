@@ -58,6 +58,8 @@ class Avada_EventsCalendar {
 		add_filter( 'tribe_get_template_part_content', array( $this, 'position_events_title_bar' ), 10, 5 );
 
 		add_filter( 'tribe_get_template_part_content', array( $this, 'sidebar_headings' ), 10, 5 );
+
+		add_filter( 'the_content', array( $this, 'single_events_blocks_sharing_box' ), 10 );
 	}
 
 	/**
@@ -395,5 +397,24 @@ class Avada_EventsCalendar {
 			return str_replace( array( '<h2', '</h2>' ), array( '<h4', '</h4>' ), $html );
 		}
 		return $html;
+	}
+
+	/**
+	 * Adds the social sharing box to single events using blocks.
+	 *
+	 * @access public
+	 * @since 5.9.1
+	 * @param string $content The block contents.
+	 * @return string The altered contents.
+	 */
+	public function single_events_blocks_sharing_box( $content ) {
+		if ( Avada_Helper::tribe_is_event() && has_blocks() ) {
+			ob_start();
+			avada_render_social_sharing( 'events' );
+			$sharing_box = ob_get_clean();
+			return $content . $sharing_box;
+		}
+
+		return $content;
 	}
 }

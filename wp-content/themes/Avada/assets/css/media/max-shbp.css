@@ -103,7 +103,6 @@ body.side-header.layout-boxed-mode #wrapper {
 #side-header.fusion-mobile-menu-design-flyout.fusion-header-has-flyout-menu .fusion-flyout-mobile-menu-icons {
   z-index: 99999;
   position: relative;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
@@ -123,15 +122,12 @@ body.layout-boxed-mode.side-header-right #side-header {
 }
 .fusion-header-has-flyout-menu .fusion-header-has-flyout-menu-content {
   z-index: 99999;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
 }
 .fusion-is-sticky .fusion-mobile-menu-design-flyout .fusion-header {
   position: fixed;

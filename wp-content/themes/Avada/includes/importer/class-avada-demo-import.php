@@ -311,10 +311,10 @@ class Avada_Demo_Import {
 
 		if ( function_exists( 'ini_get' ) ) {
 			if ( 300 < ini_get( 'max_execution_time' ) ) {
-				@ini_set( 'max_execution_time', 300 );
+				set_time_limit( 300 );
 			}
 			if ( 512 < intval( ini_get( 'memory_limit' ) ) ) {
-				@ini_set( 'memory_limit', '512M' );
+				wp_raise_memory_limit();
 			}
 		}
 
@@ -364,6 +364,7 @@ class Avada_Demo_Import {
 		add_filter( 'wxr_importer.pre_process.user', array( $this, 'skip_authors' ), 10, 2 );
 		add_action( 'wxr_importer.processed.post', array( $this, 'add_fusion_demo_import_meta' ), 10, 5 );
 		add_filter( 'import_post_meta_key', array( $this, 'skip_old_menu_meta' ), 10, 3 );
+		add_filter( 'wxr_importer.pre_process.post', array( $this, 'trim_post_content' ), 10, 4 );
 
 		if ( ! $this->import_all ) {
 
@@ -397,6 +398,7 @@ class Avada_Demo_Import {
 		remove_filter( 'wxr_importer.pre_process.user', array( $this, 'skip_authors' ), 10 );
 		remove_action( 'wxr_importer.processed.post', array( $this, 'add_fusion_demo_import_meta' ), 10 );
 		remove_filter( 'import_post_meta_key', array( $this, 'skip_old_menu_meta' ), 10 );
+		remove_filter( 'wxr_importer.pre_process.post', array( $this, 'trim_post_content' ), 10 );
 
 		if ( ! $this->import_all ) {
 			remove_filter( 'wxr_importer.pre_process.post', array( $this, 'skip_not_allowed_post_types' ), 10 );
@@ -616,6 +618,22 @@ class Avada_Demo_Import {
 	}
 
 	/**
+	 * Trim post content which seems to be added by WP 5.1+ exporter.
+	 *
+	 * @access public
+	 * @since 5.9
+	 * @param array $data     The Post importer data.
+	 * @param array $meta     The Post meta.
+	 * @param array $comments The Post comments.
+	 * @param array $terms    The Post terms.
+	 * @return bool|array
+	 */
+	public function trim_post_content( $data, $meta, $comments, $terms ) {
+		$data['post_content'] = trim( $data['post_content'] );
+		return $data;
+	}
+
+	/**
 	 * Skip non-allowed taxonomies.
 	 *
 	 * @access public
@@ -787,6 +805,12 @@ class Avada_Demo_Import {
 					if ( 'University Main Menu' === $menu->name ) {
 						$locations['main_navigation'] = $menu->term_id;
 					} elseif ( 'University Top Secondary Menu' == $menu->name ) {
+						$locations['top_navigation'] = $menu->term_id;
+					}
+				} elseif ( 'driving' === $this->demo_type ) {
+					if ( 'Driving Main Menu' === $menu->name ) {
+						$locations['main_navigation'] = $menu->term_id;
+					} elseif ( 'Driving Top Secondary Menu' === $menu->name ) {
 						$locations['top_navigation'] = $menu->term_id;
 					}
 				} else {

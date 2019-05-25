@@ -125,10 +125,19 @@ class Avada_Migrate extends Avada_Upgrade {
 
 		// Raise the memory limit and max_execution_time time.
 		if ( function_exists( 'ini_get' ) ) {
-
 			$memory = ini_get( 'memory_limit' );
-			if ( 256000000 > $memory ) {
-				@ini_set( 'memory_limit', '256M' );
+			$memory_shorthands = array(
+				'k' => 1024,
+				'm' => 1048576,
+				'g' => 1073741824,
+			);
+			$memory_last_char = substr( $memory, -1 );
+			if ( array_key_exists( strtolower( $memory_last_char ), $memory_shorthands ) ) {
+				$memory = (int) str_replace( $memory_last_char, '', $memory ) * $memory_shorthands[ strtolower( $memory_last_char ) ];
+			}
+
+			if ( 268435456 > $memory ) {
+				wp_raise_memory_limit();
 			}
 
 			$time_limit = ini_get( 'max_execution_time' );

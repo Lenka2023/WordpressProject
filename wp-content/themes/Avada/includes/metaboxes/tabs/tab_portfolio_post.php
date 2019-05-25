@@ -15,15 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $this->radio_buttonset(
-	'width',
-	esc_html__( 'Width (Content Columns for Featured Image)', 'Avada' ),
+	'post_pagination',
+	esc_attr__( 'Show Previous/Next Pagination', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
-		'full'    => esc_attr__( 'Full Width', 'Avada' ),
-		'half'    => esc_attr__( 'Half Width', 'Avada' ),
+		'yes'     => esc_attr__( 'Show', 'Avada' ),
+		'no'      => esc_attr__( 'Hide', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose if the featured image is full or half width. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_featured_image_width', '', 'select' ) )
+	sprintf( esc_html__( 'Choose to show or hide the post navigation. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_pn_nav', '', 'showhide' ) )
 );
 
 $this->radio_buttonset(
@@ -39,27 +39,15 @@ $this->radio_buttonset(
 );
 
 $this->radio_buttonset(
-	'project_desc_title',
-	esc_html__( 'Show Project Description Title', 'Avada' ),
+	'width',
+	esc_html__( 'Width (Content Columns for Featured Image)', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
-		'yes'     => esc_attr__( 'Yes', 'Avada' ),
-		'no'      => esc_attr__( 'No', 'Avada' ),
+		'full'    => esc_attr__( 'Full Width', 'Avada' ),
+		'half'    => esc_attr__( 'Half Width', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide the project description title. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_project_desc_title', '', 'yesno' ) )
-);
-
-$this->radio_buttonset(
-	'project_details',
-	esc_html__( 'Show Project Details', 'Avada' ),
-	array(
-		'default' => esc_attr__( 'Default', 'Avada' ),
-		'yes'     => esc_attr__( 'Yes', 'Avada' ),
-		'no'      => esc_attr__( 'No', 'Avada' ),
-	),
-	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide the project details text. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_project_details', '', 'yesno' ) )
+	sprintf( esc_html__( 'Choose if the featured image is full or half width. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_featured_image_width', '', 'select' ) )
 );
 
 $this->radio_buttonset(
@@ -109,6 +97,30 @@ $this->text(
 	'video_url',
 	esc_attr__( 'Youtube/Vimeo Video URL for Lightbox', 'Avada' ),
 	esc_attr__( 'Insert the video URL that will show in the lightbox.', 'Avada' )
+);
+
+$this->radio_buttonset(
+	'project_desc_title',
+	esc_html__( 'Show Project Description Title', 'Avada' ),
+	array(
+		'default' => esc_attr__( 'Default', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
+		'no'      => esc_attr__( 'No', 'Avada' ),
+	),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Choose to show or hide the project description title. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_project_desc_title', '', 'yesno' ) )
+);
+
+$this->radio_buttonset(
+	'project_details',
+	esc_html__( 'Show Project Details', 'Avada' ),
+	array(
+		'default' => esc_attr__( 'Default', 'Avada' ),
+		'yes'     => esc_attr__( 'Yes', 'Avada' ),
+		'no'      => esc_attr__( 'No', 'Avada' ),
+	),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_html__( 'Choose to show or hide the project details text. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_project_details', '', 'yesno' ) )
 );
 
 $this->text(
@@ -168,15 +180,15 @@ $this->radio_buttonset(
 );
 
 $this->radio_buttonset(
-	'related_posts',
-	esc_attr__( 'Show Related Projects', 'Avada' ),
+	'portfolio_author',
+	esc_attr__( 'Show Author', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
 		'yes'     => esc_attr__( 'Show', 'Avada' ),
 		'no'      => esc_attr__( 'Hide', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide related projects on this post. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_related_posts', '', 'showhide' ) )
+	sprintf( esc_html__( 'Choose to show or hide the author in the Project Details. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_author', '', 'showhide' ) )
 );
 
 $this->radio_buttonset(
@@ -192,15 +204,27 @@ $this->radio_buttonset(
 );
 
 $this->radio_buttonset(
-	'post_pagination',
-	esc_attr__( 'Show Previous/Next Pagination', 'Avada' ),
+	'related_posts',
+	esc_attr__( 'Show Related Projects', 'Avada' ),
 	array(
 		'default' => esc_attr__( 'Default', 'Avada' ),
 		'yes'     => esc_attr__( 'Show', 'Avada' ),
 		'no'      => esc_attr__( 'Hide', 'Avada' ),
 	),
 	/* translators: Additional description (defaults). */
-	sprintf( esc_html__( 'Choose to show or hide the post navigation. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_pn_nav', '', 'showhide' ) )
+	sprintf( esc_html__( 'Choose to show or hide related projects on this post. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_related_posts', '', 'showhide' ) )
+);
+
+$this->radio_buttonset(
+	'portfolio_comments',
+	esc_attr__( 'Show Comments', 'Avada' ),
+	array(
+		'default' => esc_attr__( 'Default', 'Avada' ),
+		'yes'     => esc_attr__( 'Show', 'Avada' ),
+		'no'      => esc_attr__( 'Hide', 'Avada' ),
+	),
+	/* translators: Additional description (defaults). */
+	sprintf( esc_attr__( 'Choose to show or hide comments area. %s', 'Avada' ), Avada()->settings->get_default_description( 'portfolio_comments', '', 'showhide' ) )
 );
 
 /* Omit closing PHP tag to avoid "Headers already sent" issues. */

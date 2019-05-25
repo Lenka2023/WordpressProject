@@ -25,9 +25,8 @@
 .fusion-body .fusion-blog-layout-medium-alternate .has-post-thumbnail .fusion-post-content {
   margin: 0;
   padding-top: 20px;
-  -webkit-flex: 1 0 100%;
-      -ms-flex: 1 0 100%;
-          flex: 1 0 100%;
+  -ms-flex: 1 0 100%;
+      flex: 1 0 100%;
 }
 .fusion-body .fusion-author .fusion-social-networks {
   text-align: center;
@@ -100,9 +99,8 @@
   height: auto;
 }
 .fusion-page-title-wrapper {
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 .fusion-page-title-bar-left .fusion-page-title-captions,
 .fusion-page-title-bar-right .fusion-page-title-captions,
@@ -191,6 +189,7 @@
   display: inline-block;
 }
 .tfs-slider .fusion-title {
+  margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
 .tfs-slider .slide-content-container .btn {
@@ -329,10 +328,11 @@ body .shortcode-tabs .tab-hold .tabs li {
 #toTop {
   bottom: 30px;
   border-radius: 4px;
-  height: 48px;
+  height: 44px;
+  width: 44px;
 }
 #toTop:before {
-  line-height: 46px;
+  line-height: 42px;
 }
 .no-mobile-totop .to-top-container {
   display: none;

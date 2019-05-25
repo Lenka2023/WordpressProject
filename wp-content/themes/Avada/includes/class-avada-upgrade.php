@@ -143,6 +143,9 @@ class Avada_Upgrade {
 			'572' => array( '5.7.2', false ),
 			'580' => array( '5.8.0', false ),
 			'581' => array( '5.8.1', false ),
+			'582' => array( '5.8.2', false ),
+			'590' => array( '5.9.0', false ),
+			'591' => array( '5.9.1', false ),
 		);
 
 		$upgraded = false;

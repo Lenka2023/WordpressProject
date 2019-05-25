@@ -130,14 +130,29 @@ if ( ! function_exists( 'fusion_render_post_metadata' ) ) {
 
 		$settings = ( is_array( $settings ) ) ? $settings : array();
 
-		$default_settings = array(
-			'post_meta'          => fusion_library()->get_option( 'post_meta' ),
-			'post_meta_author'   => fusion_library()->get_option( 'post_meta_author' ),
-			'post_meta_date'     => fusion_library()->get_option( 'post_meta_date' ),
-			'post_meta_cats'     => fusion_library()->get_option( 'post_meta_cats' ),
-			'post_meta_tags'     => fusion_library()->get_option( 'post_meta_tags' ),
-			'post_meta_comments' => fusion_library()->get_option( 'post_meta_comments' ),
-		);
+		if ( is_search() ) {
+			$search_meta = array_flip( fusion_library()->get_option( 'search_meta' ) );
+
+			$default_settings = array(
+				'post_meta'          => empty( $search_meta ) ? false : true,
+				'post_meta_author'   => isset( $search_meta['author'] ),
+				'post_meta_date'     => isset( $search_meta['date'] ),
+				'post_meta_cats'     => isset( $search_meta['categories'] ),
+				'post_meta_tags'     => isset( $search_meta['tags'] ),
+				'post_meta_comments' => isset( $search_meta['comments'] ),
+				'post_meta_type'     => isset( $search_meta['post_type'] ),
+			);
+		} else {
+			$default_settings = array(
+				'post_meta'          => fusion_library()->get_option( 'post_meta' ),
+				'post_meta_author'   => fusion_library()->get_option( 'post_meta_author' ),
+				'post_meta_date'     => fusion_library()->get_option( 'post_meta_date' ),
+				'post_meta_cats'     => fusion_library()->get_option( 'post_meta_cats' ),
+				'post_meta_tags'     => fusion_library()->get_option( 'post_meta_tags' ),
+				'post_meta_comments' => fusion_library()->get_option( 'post_meta_comments' ),
+				'post_meta_type'     => false,
+			);
+		}
 
 		$settings = wp_parse_args( $settings, $default_settings );
 		$post_meta = get_post_meta( get_queried_object_id(), 'pyre_post_meta', true );
@@ -146,8 +161,14 @@ if ( ! function_exists( 'fusion_render_post_metadata' ) ) {
 		if ( ( $settings['post_meta'] && 'no' !== $post_meta ) || ( ! $settings['post_meta'] && 'yes' === $post_meta ) ) {
 
 			// For alternate, grid and timeline layouts return empty single-line-meta if all meta data for that position is disabled.
-			if ( in_array( $layout, array( 'alternate', 'grid_timeline' ), true ) && ! $settings['post_meta_author'] && ! $settings['post_meta_date'] && ! $settings['post_meta_cats'] && ! $settings['post_meta_tags'] && ! $settings['post_meta_comments'] ) {
+			if ( in_array( $layout, array( 'alternate', 'grid_timeline' ), true ) && ! $settings['post_meta_author'] && ! $settings['post_meta_date'] && ! $settings['post_meta_cats'] && ! $settings['post_meta_tags'] && ! $settings['post_meta_comments'] && ! $settings['post_meta_type'] ) {
 				return '';
+			}
+
+			// Render post type meta data.
+			if ( $settings['post_meta_type'] ) {
+				$metadata .= '<span class="fusion-meta-post-type">' . esc_html( ucwords( get_post_type() ) ) . '</span>';
+				$metadata .= '<span class="fusion-inline-sep">|</span>';
 			}
 
 			// Render author meta data.
@@ -183,8 +204,20 @@ if ( ! function_exists( 'fusion_render_post_metadata' ) ) {
 			// Render rest of meta data.
 			// Render categories.
 			if ( $settings['post_meta_cats'] ) {
+				$post_type  = get_post_type();
+
+				$taxonomies = array(
+					'avada_portfolio' => 'portfolio_category',
+					'avada_faq'       => 'faq_category',
+					'product'         => 'product_cat',
+					'tribe_events'    => 'tribe_events_cat',
+				);
 				ob_start();
-				the_category( ', ' );
+				if ( 'post' === $post_type ) {
+					the_category( ', ' );
+				} elseif ( 'page' !== $post_type && isset( $taxonomies[ $post_type ] ) ) {
+					the_terms( get_the_ID(), $taxonomies[ $post_type ], '', ', ' );
+				}
 				$categories = ob_get_clean();
 
 				if ( $categories ) {
@@ -428,6 +461,20 @@ if ( ! function_exists( 'fusion_get_post_content' ) ) {
 
 			// Check if HTML should be stripped from contant.
 			if ( fusion_library()->get_option( 'strip_html_excerpt' ) ) {
+				$strip_html = true;
+			}
+		} elseif ( 'search' === $excerpt ) {
+
+			// Check if the content should be excerpted.
+			if ( 'excerpt' === strtolower( fusion_library()->get_option( 'search_content_length' ) ) ) {
+				$content_excerpted = true;
+
+				// Get the excerpt length.
+				$excerpt_length = fusion_library()->get_option( 'search_excerpt_length' );
+			}
+
+			// Check if HTML should be stripped from contant.
+			if ( fusion_library()->get_option( 'search_strip_html_excerpt' ) ) {
 				$strip_html = true;
 			}
 		} elseif ( 'portfolio' === $excerpt ) {
@@ -863,7 +910,7 @@ if ( ! function_exists( 'fusion_pagination' ) ) {
 		$output       = '';
 
 		if ( 1 !== $max_pages ) {
-			if ( $infinite_scroll || ( ! $is_element && ( 'Pagination' !== $fusion_settings->get( 'blog_pagination_type' ) && ( is_home() || is_search() || ( 'post' === get_post_type() && ( is_author() || is_archive() ) ) ) ) || ( 'pagination' !== $fusion_settings->get( 'portfolio_archive_pagination_type' ) && ( is_post_type_archive( 'avada_portfolio' ) || is_tax( 'portfolio_category' ) || is_tax( 'portfolio_skills' ) || is_tax( 'portfolio_tags' ) ) ) ) ) {
+			if ( $infinite_scroll || ( ! $is_element && ( ( 'Pagination' !== $fusion_settings->get( 'blog_pagination_type' ) && ( is_home() || ( 'post' === get_post_type() && ( is_author() || is_archive() ) ) ) ) || ( 'Pagination' !== $fusion_settings->get( 'search_pagination_type' ) && is_search() ) || ( 'pagination' !== $fusion_settings->get( 'portfolio_archive_pagination_type' ) && ( is_post_type_archive( 'avada_portfolio' ) || is_tax( 'portfolio_category' ) || is_tax( 'portfolio_skills' ) || is_tax( 'portfolio_tags' ) ) ) ) ) ) {
 				$output .= '<div class="fusion-infinite-scroll-trigger"></div>';
 				$output .= '<div class="pagination infinite-scroll clearfix" style="display:none;">';
 			} else {
@@ -967,7 +1014,7 @@ if ( ! function_exists( 'fusion_is_shop' ) ) {
 	/**
 	 * Returns true when viewing the product type archive (shop).
 	 *
-	 * @since 5.8
+	 * @since 1.8
 	 * @param integer/string $current_page_id Post/Page ID.
 	 * @return bool Theme option or page option value.
 	 */
@@ -984,5 +1031,21 @@ if ( ! function_exists( 'fusion_is_shop' ) ) {
 		}
 
 		return $is_shop_page;
+	}
+}
+
+if ( ! function_exists( 'fusion_get_google_maps_language_code' ) ) {
+	/**
+	 * Returns the correct Google maps language code.
+	 *
+	 * @since 1.9
+	 * @return string The correct Google maps language code.
+	 */
+	function fusion_get_google_maps_language_code() {
+		$lang_codes   = array( 'en_Au', 'en_GB', 'pt_BR', 'pt_PT', 'zh_CN', 'zh_TW' );
+		$lang_locale  = get_locale();
+		$lang_code    = in_array( $lang_locale, $lang_codes ) ? str_replace( '_', '-', $lang_locale ) : substr( get_locale(), 0, 2 );
+
+		return $lang_code;
 	}
 }

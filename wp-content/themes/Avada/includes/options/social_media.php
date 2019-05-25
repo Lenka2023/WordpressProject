@@ -42,7 +42,7 @@ function avada_options_section_social_media( $sections ) {
 						'type'        => 'custom',
 					),
 					'social_media_icons' => array(
-						'label'       => esc_html__( 'Social Media Links', 'Avada' ),
+						'label'       => esc_html__( 'Social Media Icons / Links', 'Avada' ),
 						'description' => esc_html__( 'Social media links use a repeater field and allow one network per field. Click the "Add" button to add additional fields.', 'Avada' ),
 						'id'          => 'social_media_icons',
 						'default'     => array(),
@@ -80,7 +80,7 @@ function avada_options_section_social_media( $sections ) {
 				),
 			),
 			'header_social_icons_options' => array(
-				'label'       => esc_html__( 'Header Social Icons', 'Avada' ),
+				'label'       => esc_html__( 'Header Social Icons Styling', 'Avada' ),
 				'description' => '',
 				'id'          => 'header_social_icons_options',
 				'default'     => '',
@@ -190,7 +190,7 @@ function avada_options_section_social_media( $sections ) {
 				),
 			),
 			'footer_social_icons_options' => array(
-				'label'       => esc_html__( 'Footer Social Icons', 'Avada' ),
+				'label'       => esc_html__( 'Footer Social Icons Styling', 'Avada' ),
 				'description' => '',
 				'id'          => 'footer_social_icons_options',
 				'default'     => '',
